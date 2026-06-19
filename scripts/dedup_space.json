@@ -1,0 +1,25 @@
+{
+  "code": 200,
+  "data": {
+    "description": "Welcome to Dedup",
+    "external": {},
+    "html": "<html><head>\n    <title>DeDup.space</title>\n    <meta name=\"description\" content=\"Welcome to Dedup\">\n    <meta name=\"keywords\" content=\"ACleaner for your phone\">\n  </head>\n  <frameset rows=\"100%,*\" border=\"0\">\n    <frame src=\"https://dedupspace.netlify.app\" frameborder=\"0\">\n  </frameset>\n\n</html>",
+    "httpStatus": 200,
+    "httpStatusText": "",
+    "metadata": {
+      "description": "Welcome to Dedup",
+      "keywords": "ACleaner for your phone"
+    },
+    "title": "DeDup.space",
+    "url": "https://dedup.space/",
+    "usage": {
+      "tokens": 91
+    }
+  },
+  "meta": {
+    "usage": {
+      "tokens": 91
+    }
+  },
+  "status": 20000
+}
