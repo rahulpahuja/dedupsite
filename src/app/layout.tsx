@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
-import Script from "next/script";
 import { Toaster } from "@/components/ui/toaster";
 
 const spaceGrotesk = Space_Grotesk({
@@ -47,21 +47,23 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${spaceGrotesk.variable} ${inter.variable} antialiased bg-[#080B14] text-[#F8FAFF]`}
-      >{/* ── Google Analytics (gtag.js) — GA4 ID: G-E6B5M8JKHP ── */}
-<Script
-  async
-  src="https://www.googletagmanager.com/gtag/js?id=G-E6B5M8JKHP"
-  strategy="afterInteractive"
-/>
-<Script id="gtag-init" strategy="afterInteractive">
-  {`
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-E6B5M8JKHP');
-  `}
-</Script>
+        className={`${spaceGrotesk.variable} ${inter.variable} antialiased bg-[#0F0608] text-[#FFF5F0]`}
+      >
+        {/* ── Google Analytics (gtag.js) — GA4 ID: G-E6B5M8JKHP ── */}
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-E6B5M8JKHP"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-E6B5M8JKHP');
+          `}
+        </Script>
+
         {children}
         <Toaster />
       </body>

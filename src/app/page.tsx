@@ -155,28 +155,28 @@ const TINTS: Record<
   { badge: string; icon: string; tag: string; glow: string }
 > = {
   media: {
-    badge: 'bg-violet-500/15 text-violet-300 border-violet-500/30',
-    icon: 'from-violet-500/30 to-violet-500/0 text-violet-300',
-    tag: 'bg-violet-500/10 text-violet-200/80 border-violet-500/20',
-    glow: 'group-hover:shadow-[0_0_50px_-12px_rgba(167,139,250,0.5)]',
+    badge: 'bg-rose-500/15 text-rose-300 border-rose-500/30',
+    icon: 'from-rose-500/30 to-rose-500/0 text-rose-300',
+    tag: 'bg-rose-500/10 text-rose-200/80 border-rose-500/20',
+    glow: 'group-hover:shadow-[0_0_50px_-12px_rgba(251,113,133,0.5)]',
   },
   smart: {
-    badge: 'bg-teal-500/15 text-teal-300 border-teal-500/30',
-    icon: 'from-teal-500/30 to-teal-500/0 text-teal-300',
-    tag: 'bg-teal-500/10 text-teal-200/80 border-teal-500/20',
-    glow: 'group-hover:shadow-[0_0_50px_-12px_rgba(56,189,248,0.5)]',
+    badge: 'bg-orange-500/15 text-orange-300 border-orange-500/30',
+    icon: 'from-orange-500/30 to-orange-500/0 text-orange-300',
+    tag: 'bg-orange-500/10 text-orange-200/80 border-orange-500/20',
+    glow: 'group-hover:shadow-[0_0_50px_-12px_rgba(251,146,60,0.5)]',
   },
   contacts: {
-    badge: 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30',
-    icon: 'from-indigo-500/30 to-indigo-500/0 text-indigo-300',
-    tag: 'bg-indigo-500/10 text-indigo-200/80 border-indigo-500/20',
-    glow: 'group-hover:shadow-[0_0_50px_-12px_rgba(99,102,241,0.5)]',
+    badge: 'bg-pink-500/15 text-pink-300 border-pink-500/30',
+    icon: 'from-pink-500/30 to-pink-500/0 text-pink-300',
+    tag: 'bg-pink-500/10 text-pink-200/80 border-pink-500/20',
+    glow: 'group-hover:shadow-[0_0_50px_-12px_rgba(244,63,94,0.5)]',
   },
   ai: {
-    badge: 'bg-fuchsia-500/15 text-fuchsia-300 border-fuchsia-500/30',
-    icon: 'from-fuchsia-500/30 to-fuchsia-500/0 text-fuchsia-300',
-    tag: 'bg-fuchsia-500/10 text-fuchsia-200/80 border-fuchsia-500/20',
-    glow: 'group-hover:shadow-[0_0_50px_-12px_rgba(217,70,239,0.5)]',
+    badge: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+    icon: 'from-amber-500/30 to-amber-500/0 text-amber-300',
+    tag: 'bg-amber-500/10 text-amber-200/80 border-amber-500/20',
+    glow: 'group-hover:shadow-[0_0_50px_-12px_rgba(251,191,36,0.5)]',
   },
 }
 
@@ -285,7 +285,7 @@ function AiDialogue() {
             <div
               className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
                 m.role === 'user'
-                  ? 'bg-gradient-to-br from-indigo-500 to-violet-500 text-white rounded-br-sm'
+                  ? 'bg-gradient-to-br from-pink-500 to-orange-500 text-white rounded-br-sm'
                   : 'bg-white/[0.04] border border-white/10 text-white/90 rounded-bl-sm'
               }`}
               dangerouslySetInnerHTML={{ __html: m.text }}
@@ -300,7 +300,7 @@ function AiDialogue() {
           <div
             className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
               AI_DIALOGUE[visibleCount].role === 'user'
-                ? 'bg-gradient-to-br from-indigo-500 to-violet-500 text-white rounded-br-sm'
+                ? 'bg-gradient-to-br from-pink-500 to-orange-500 text-white rounded-br-sm'
                 : 'bg-white/[0.04] border border-white/10 text-white/90 rounded-bl-sm'
             }`}
           >
@@ -353,7 +353,7 @@ function PrivacyModal({ open, onClose }: { open: boolean; onClose: () => void })
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.98 }}
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-            className="modal-scroll relative z-10 max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-white/10 bg-[#0F1626] p-6 shadow-2xl sm:p-8"
+            className="modal-scroll relative z-10 max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-white/10 bg-[#1A0809] p-6 shadow-2xl sm:p-8"
           >
             <div className="mb-6 flex items-start justify-between gap-4">
               <div>
@@ -380,8 +380,8 @@ function PrivacyModal({ open, onClose }: { open: boolean; onClose: () => void })
                   <strong className="text-white">DeDup</strong> mobile application. Your privacy is
                   fundamental to how we built this app.
                 </p>
-                <div className="mt-4 flex items-start gap-3 rounded-xl border border-violet-500/20 bg-violet-500/[0.07] p-4">
-                  <Shield className="mt-0.5 h-5 w-5 flex-shrink-0 text-violet-300" />
+                <div className="mt-4 flex items-start gap-3 rounded-xl border border-rose-500/20 bg-rose-500/[0.07] p-4">
+                  <Shield className="mt-0.5 h-5 w-5 flex-shrink-0 text-rose-300" />
                   <p>
                     <strong className="text-white">Local Processing Guarantee:</strong> All file
                     scanning, hashing, and duplicate detection happen entirely on your device. No
@@ -494,7 +494,7 @@ function PrivacyModal({ open, onClose }: { open: boolean; onClose: () => void })
                     <strong className="text-white/90">Email:</strong>{' '}
                     <a
                       href="mailto:therahulpahuja@gmail.com"
-                      className="text-violet-300 underline-offset-4 hover:underline"
+                      className="text-rose-300 underline-offset-4 hover:underline"
                     >
                       therahulpahuja@gmail.com
                     </a>
@@ -505,7 +505,7 @@ function PrivacyModal({ open, onClose }: { open: boolean; onClose: () => void })
                       href="https://www.therahulpahuja.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-violet-300 underline-offset-4 hover:underline"
+                      className="text-rose-300 underline-offset-4 hover:underline"
                     >
                       www.therahulpahuja.com
                     </a>
@@ -556,7 +556,7 @@ function ScrollProgressBar({ progress }: { progress: number }) {
   return (
     <div className="fixed left-0 top-0 z-[150] h-0.5 w-full bg-transparent">
       <div
-        className="h-full origin-left bg-gradient-to-r from-indigo-500 via-violet-400 to-teal-400"
+        className="h-full origin-left bg-gradient-to-r from-pink-500 via-orange-400 to-amber-400"
         style={{ transform: `scaleX(${progress})`, transition: 'transform 0.1s linear' }}
       />
     </div>
@@ -604,8 +604,8 @@ export default function DedupPage() {
       </div>
 
       {/* Top + bottom fades for text legibility */}
-      <div className="pointer-events-none fixed inset-x-0 top-0 z-[2] h-32 bg-gradient-to-b from-[#05070F] to-transparent" />
-      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-[2] h-40 bg-gradient-to-t from-[#05070F] to-transparent" />
+      <div className="pointer-events-none fixed inset-x-0 top-0 z-[2] h-32 bg-gradient-to-b from-[#0F0608] to-transparent" />
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-[2] h-40 bg-gradient-to-t from-[#0F0608] to-transparent" />
 
       {/* ── NAV ─────────────────────────────────────────── */}
       <nav className="fixed top-0 left-0 right-0 z-[100] px-6 py-4">
@@ -637,11 +637,11 @@ export default function DedupPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="inline-flex items-center gap-3 self-center text-[11px] font-medium uppercase tracking-[0.18em] text-violet-300"
+            className="inline-flex items-center gap-3 self-center text-[11px] font-medium uppercase tracking-[0.18em] text-rose-300"
           >
-            <span className="h-px w-6 bg-violet-400/60" />
+            <span className="h-px w-6 bg-rose-400/60" />
             On-Device · Private · Free
-            <span className="h-px w-6 bg-violet-400/60" />
+            <span className="h-px w-6 bg-rose-400/60" />
           </motion.div>
 
           <motion.h1
@@ -703,18 +703,19 @@ export default function DedupPage() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-md"
           >
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-xs font-semibold text-violet-300">
-              <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-rose-500/30 bg-rose-500/10 px-3 py-1 text-xs font-semibold text-rose-300">
+              <span className="h-1.5 w-1.5 rounded-full bg-rose-400" />
               The merge
             </div>
             <h2 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
-              <span className="text-gradient">847 duplicates.</span>
+              <span className="text-gradient">Photos. Music. Videos.</span>
               <br />
-              One tap. Gone.
+              APKs. Contacts. Docs.
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-white/55 sm:text-base">
-              Pixel-level fingerprints find exact copies, near-duplicates, burst shots, and re-saved
-              WhatsApp media — all computed on your device.
+              Every kind of duplicate on your phone — burst shots, re-downloaded songs, viral
+              WhatsApp videos, leftover APKs, double-saved contacts, cloned PDFs. All found,
+              fingerprinted, and merged on-device.
             </p>
           </motion.div>
         </CinematicSection>
@@ -728,8 +729,8 @@ export default function DedupPage() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-md"
           >
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-teal-500/30 bg-teal-500/10 px-3 py-1 text-xs font-semibold text-teal-300">
-              <span className="h-1.5 w-1.5 rounded-full bg-teal-400" />
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-xs font-semibold text-orange-300">
+              <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
               The reveal
             </div>
             <h2 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
@@ -738,8 +739,8 @@ export default function DedupPage() {
               <span className="text-gradient">Crystal clear.</span>
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-white/55 sm:text-base">
-              DeDup doesn’t just delete — it organises. What’s left is the cleanest version of your
-              phone’s storage you’ve ever seen.
+              DeDup doesn’t just delete — it organises. And with on-device AI, you can ask your
+              phone anything about its own storage, in plain language.
             </p>
           </motion.div>
         </CinematicSection>
@@ -747,7 +748,7 @@ export default function DedupPage() {
         {/* ── FEATURE GRID SECTION (after cinematic) ───── */}
         {/* The 3D canvas fades out via the bottom gradient as this content
             begins; section has a more opaque background to remain legible. */}
-        <section className="relative bg-[#05070F]/85 px-6 pb-24 pt-32 backdrop-blur-md">
+        <section className="relative bg-[#0F0608]/85 px-6 pb-24 pt-32 backdrop-blur-md">
           <div className="section-shell">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -756,7 +757,7 @@ export default function DedupPage() {
               transition={{ duration: 0.7 }}
               className="mb-12 text-center"
             >
-              <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-violet-300">
+              <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-rose-300">
                 What DeDup Does
               </div>
               <h2 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-[44px]">
@@ -808,11 +809,11 @@ export default function DedupPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.7 }}
-                className="overflow-hidden rounded-2xl border border-fuchsia-500/20 bg-gradient-to-br from-fuchsia-500/[0.07] via-violet-500/[0.04] to-transparent p-6 sm:p-10"
+                className="overflow-hidden rounded-2xl border border-amber-500/20 bg-gradient-to-br from-amber-500/[0.07] via-rose-500/[0.04] to-transparent p-6 sm:p-10"
               >
                 <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
                   <div>
-                    <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-fuchsia-500/30 bg-fuchsia-500/10 px-3 py-1 text-xs font-medium text-fuchsia-300">
+                    <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-300">
                       <Sparkles className="h-3 w-3" />
                       On-Device AI
                     </div>
@@ -833,20 +834,20 @@ export default function DedupPage() {
                           transition={{ duration: 0.4, delay: i * 0.08 }}
                           className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs text-white/70"
                         >
-                          <MessageCircle className="h-3.5 w-3.5 flex-shrink-0 text-fuchsia-300" />
+                          <MessageCircle className="h-3.5 w-3.5 flex-shrink-0 text-amber-300" />
                           {ex}
                         </motion.div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="rounded-2xl border border-white/10 bg-[#0B1120]/80 p-5 backdrop-blur-md sm:p-6">
+                  <div className="rounded-2xl border border-white/10 bg-[#1A0809]/80 p-5 backdrop-blur-md sm:p-6">
                     <div className="mb-4 flex items-center justify-between">
                       <div className="flex items-center gap-2 text-xs font-medium text-white/50">
                         <span className="flex h-2 w-2 rounded-full bg-emerald-400" />
                         DeDup AI · Live demo
                       </div>
-                      <Star className="h-3.5 w-3.5 text-fuchsia-300" />
+                      <Star className="h-3.5 w-3.5 text-amber-300" />
                     </div>
                     <AiDialogue />
                   </div>
@@ -857,16 +858,16 @@ export default function DedupPage() {
         </section>
 
         {/* ── BOTTOM CTA ──────────────────────────────── */}
-        <section className="relative bg-[#05070F]/85 px-6 py-24 backdrop-blur-md">
+        <section className="relative bg-[#0F0608]/85 px-6 py-24 backdrop-blur-md">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.7 }}
-            className="section-shell relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-indigo-500/[0.1] via-violet-500/[0.05] to-transparent px-6 py-16 text-center sm:px-12 sm:py-20"
+            className="section-shell relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-pink-500/[0.1] via-orange-500/[0.05] to-transparent px-6 py-16 text-center sm:px-12 sm:py-20"
           >
-            <div className="pointer-events-none absolute -left-20 -top-20 h-60 w-60 rounded-full bg-violet-500/20 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-20 -right-20 h-60 w-60 rounded-full bg-teal-500/15 blur-3xl" />
+            <div className="pointer-events-none absolute -left-20 -top-20 h-60 w-60 rounded-full bg-rose-500/20 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-20 -right-20 h-60 w-60 rounded-full bg-orange-500/15 blur-3xl" />
 
             <h2 className="relative font-display text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
               Your phone. Cleaner. Faster.
@@ -889,7 +890,7 @@ export default function DedupPage() {
         </section>
 
         {/* ── FOOTER ──────────────────────────────────── */}
-        <footer className="relative border-t border-white/[0.06] bg-[#05070F] px-6 py-10">
+        <footer className="relative border-t border-white/[0.06] bg-[#0F0608] px-6 py-10">
           <div className="section-shell flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div className="font-display text-base font-bold text-gradient-white">DeDup</div>
             <p className="text-center text-xs text-white/45">

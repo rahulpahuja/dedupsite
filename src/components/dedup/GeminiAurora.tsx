@@ -21,24 +21,24 @@ export default function GeminiAurora() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#05070F]"
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#0F0608]"
     >
-      {/* Base radial wash */}
+      {/* Base radial wash — warm pink/orange glow */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 80% 60% at 50% 30%, rgba(99,102,241,0.18), transparent 60%), radial-gradient(ellipse 70% 50% at 50% 100%, rgba(56,189,248,0.10), transparent 70%)',
+            'radial-gradient(ellipse 80% 60% at 50% 30%, rgba(244,63,94,0.22), transparent 60%), radial-gradient(ellipse 70% 50% at 50% 100%, rgba(251,146,60,0.14), transparent 70%)',
         }}
       />
 
-      {/* Drifting gradient blobs */}
+      {/* Drifting gradient blobs — warm palette */}
       <div className="aurora-blob aurora-blob-1" />
       <div className="aurora-blob aurora-blob-2" />
       <div className="aurora-blob aurora-blob-3" />
       <div className="aurora-blob aurora-blob-4" />
 
-      {/* Conic shimmer — slow sweep */}
+      {/* Conic shimmer — slow sweep (warm) */}
       <div className="aurora-conic" />
 
       {/* Grain overlay */}
@@ -51,12 +51,12 @@ export default function GeminiAurora() {
         }}
       />
 
-      {/* Edge vignette for readability */}
+      {/* Edge vignette for readability (warm-tinted) */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 90% 90% at 50% 50%, transparent 55%, rgba(5,7,15,0.55) 90%, rgba(5,7,15,0.95) 100%)',
+            'radial-gradient(ellipse 90% 90% at 50% 50%, transparent 55%, rgba(15,6,8,0.55) 90%, rgba(15,6,8,0.95) 100%)',
         }}
       />
 
@@ -74,7 +74,7 @@ export default function GeminiAurora() {
           height: 55vw;
           left: -10vw;
           top: -10vw;
-          background: radial-gradient(circle at 30% 30%, #6366F1 0%, transparent 65%);
+          background: radial-gradient(circle at 30% 30%, #F43F5E 0%, transparent 65%);
           animation: drift1 22s ease-in-out infinite alternate;
         }
         .aurora-blob-2 {
@@ -82,7 +82,7 @@ export default function GeminiAurora() {
           height: 50vw;
           right: -12vw;
           top: 5vw;
-          background: radial-gradient(circle at 50% 50%, #A78BFA 0%, transparent 65%);
+          background: radial-gradient(circle at 50% 50%, #FB923C 0%, transparent 65%);
           animation: drift2 26s ease-in-out infinite alternate;
         }
         .aurora-blob-3 {
@@ -90,7 +90,7 @@ export default function GeminiAurora() {
           height: 60vw;
           left: 10vw;
           bottom: -20vw;
-          background: radial-gradient(circle at 50% 50%, #38BDF8 0%, transparent 65%);
+          background: radial-gradient(circle at 50% 50%, #EC4899 0%, transparent 65%);
           animation: drift3 30s ease-in-out infinite alternate;
           opacity: 0.42;
         }
@@ -99,7 +99,7 @@ export default function GeminiAurora() {
           height: 40vw;
           right: 5vw;
           bottom: -10vw;
-          background: radial-gradient(circle at 50% 50%, #EC4899 0%, transparent 60%);
+          background: radial-gradient(circle at 50% 50%, #FBBF24 0%, transparent 60%);
           animation: drift4 28s ease-in-out infinite alternate;
           opacity: 0.32;
         }
@@ -109,10 +109,10 @@ export default function GeminiAurora() {
           background: conic-gradient(
             from 0deg at 50% 50%,
             transparent 0deg,
-            rgba(99, 102, 241, 0.08) 60deg,
-            rgba(167, 139, 250, 0.10) 120deg,
-            rgba(56, 189, 248, 0.06) 180deg,
-            rgba(236, 72, 153, 0.05) 240deg,
+            rgba(244, 63, 94, 0.10) 60deg,
+            rgba(251, 146, 60, 0.12) 120deg,
+            rgba(236, 72, 153, 0.08) 180deg,
+            rgba(251, 191, 36, 0.06) 240deg,
             transparent 300deg,
             transparent 360deg
           );

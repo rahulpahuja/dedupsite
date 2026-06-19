@@ -1,17 +1,28 @@
+# ─────────────────────────────────────────────────────────────
+# Netlify Configuration for DeDup (Next.js 16 App Router)
+# ─────────────────────────────────────────────────────────────
+
 [build]
   command = "npm run build"
   publish = ".next"
 
+# Next.js Runtime Plugin — required for App Router, Server Components,
+# API routes, and image optimization to work on Netlify.
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# Cache static assets aggressively (huge perf win for 3D bundles)
+# ─────────────────────────────────────────────────────────────
+# Headers
+# ─────────────────────────────────────────────────────────────
+
+# Cache static assets aggressively (immutable fingerprinted bundles
+# from Next.js — safe to cache for a year).
 [[headers]]
   for = "/_next/static/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Basic security headers
+# Security headers applied to every route.
 [[headers]]
   for = "/*"
   [headers.values]
@@ -19,3 +30,14 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# ─────────────────────────────────────────────────────────────
+# Redirects (optional — only uncomment if you need them)
+# ─────────────────────────────────────────────────────────────
+
+# Force apex → www (or remove this block if you prefer apex as primary)
+# [[redirects]]
+#   from = "https://dedup.space/*"
+#   to   = "https://www.dedup.space/:splat"
+#   status = 301
+#   force = true
