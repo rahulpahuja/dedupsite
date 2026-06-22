@@ -614,6 +614,12 @@ export default function DedupPage() {
             De<span className="text-gradient">Dup</span>
           </div>
           <div className="flex items-center gap-3">
+            <a
+              href="/blog"
+              className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70 backdrop-blur-sm transition hover:bg-white/10 hover:text-white"
+            >
+              Blog
+            </a>
             <button
               onClick={() => setPrivacyOpen(true)}
               className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70 backdrop-blur-sm transition hover:bg-white/10 hover:text-white"

@@ -1,0 +1,11 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/(protected)/blog/new/page": "app/admin/(protected)/blog/new/page.js",
+  "/admin/(protected)/blog/page": "app/admin/(protected)/blog/page.js",
+  "/admin/login/page": "app/admin/login/page.js",
+  "/api/admin/auth/route": "app/api/admin/auth/route.js",
+  "/api/admin/posts/route": "app/api/admin/posts/route.js",
+  "/api/blog/route": "app/api/blog/route.js",
+  "/blog/[slug]/page": "app/blog/[slug]/page.js",
+  "/blog/page": "app/blog/page.js"
+}

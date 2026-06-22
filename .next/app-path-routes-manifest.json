@@ -1,0 +1,18 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/admin/(protected)/blog/[id]/edit/page": "/admin/blog/[id]/edit",
+  "/admin/(protected)/blog/new/page": "/admin/blog/new",
+  "/admin/(protected)/blog/page": "/admin/blog",
+  "/admin/login/page": "/admin/login",
+  "/admin/page": "/admin",
+  "/api/admin/auth/route": "/api/admin/auth",
+  "/api/admin/posts/[id]/route": "/api/admin/posts/[id]",
+  "/api/admin/posts/route": "/api/admin/posts",
+  "/api/blog/[slug]/route": "/api/blog/[slug]",
+  "/api/blog/route": "/api/blog",
+  "/api/route": "/api",
+  "/blog/[slug]/page": "/blog/[slug]",
+  "/blog/page": "/blog",
+  "/page": "/"
+}
