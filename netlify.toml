@@ -3,7 +3,7 @@
 # ─────────────────────────────────────────────────────────────
 
 [build]
-  command = "npm run build"
+  command = "npx prisma generate && npm run build"
   publish = ".next"
 
 # Next.js Runtime Plugin — required for App Router, Server Components,

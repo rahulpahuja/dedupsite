@@ -4,6 +4,16 @@ import ReactMarkdown from 'react-markdown'
 import { db } from '@/lib/db'
 import { parseTags, estimateReadTime } from '@/lib/auth'
 
+export const dynamicParams = false
+
+export async function generateStaticParams() {
+  const posts = await db.post.findMany({
+    where: { published: true },
+    select: { slug: true },
+  })
+  return posts.map((post) => ({ slug: post.slug }))
+}
+
 type Props = { params: Promise<{ slug: string }> }
 
 export async function generateMetadata({ params }: Props) {

@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { db } from '@/lib/db'
 import { parseTags, estimateReadTime } from '@/lib/auth'
 
+export const dynamic = 'force-static'
+
 export const metadata = {
   title: 'Blog — DeDup',
   description: 'Tips, updates, and insights from the DeDup team.',
