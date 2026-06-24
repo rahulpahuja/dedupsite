@@ -19,23 +19,35 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://dedup.space"),
   title: "DeDup — Clean Your Phone, Keep Your Memories",
   description:
     "DeDup finds and removes duplicate photos, videos and files — entirely on your device. Your data never leaves your phone.",
   keywords: ["DeDup", "duplicate cleaner", "phone cleaner", "on-device", "privacy", "Android"],
   authors: [{ name: "Rahul Pahuja" }],
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
   openGraph: {
     title: "DeDup — Clean Your Phone, Keep Your Memories",
     description:
       "DeDup finds and removes duplicate photos, videos and files — entirely on your device.",
+    url: "https://dedup.space",
     siteName: "DeDup",
     type: "website",
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
     title: "DeDup — Clean Your Phone, Keep Your Memories",
     description:
       "DeDup finds and removes duplicate photos, videos and files — entirely on your device.",
+    creator: "@therahulpahuja",
   },
 };
 
@@ -46,6 +58,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Preload the most-used 3D textures so they're ready when Three.js initialises */}
+        <link rel="preload" href="/dedup-assets/photo-0.png" as="image" />
+        <link rel="preload" href="/dedup-assets/photo-1.png" as="image" />
+        <link rel="preload" href="/dedup-assets/music-0.png" as="image" />
+        <link rel="preload" href="/dedup-assets/ai-orb.png" as="image" />
+      </head>
       <body
         className={`${spaceGrotesk.variable} ${inter.variable} antialiased bg-[#0F0608] text-[#FFF5F0]`}
       >

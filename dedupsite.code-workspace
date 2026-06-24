@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../workspace-ed04290f-1844-4e36-9f7f-5a09aca4b550/db"
+		},
+		{
+			"path": "../../workspace-ed04290f-1844-4e36-9f7f-5a09aca4b550/examples"
+		},
+		{
+			"path": "../../workspace-ed04290f-1844-4e36-9f7f-5a09aca4b550/mini-services"
+		},
+		{
+			"path": "../../workspace-ed04290f-1844-4e36-9f7f-5a09aca4b550/prisma"
+		},
+		{
+			"path": "../../workspace-ed04290f-1844-4e36-9f7f-5a09aca4b550/public"
+		},
+		{
+			"path": "../../workspace-ed04290f-1844-4e36-9f7f-5a09aca4b550/scripts"
+		},
+		{
+			"path": "../../workspace-ed04290f-1844-4e36-9f7f-5a09aca4b550/src"
+		}
+	],
+	"settings": {}
+}

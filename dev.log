@@ -2,7 +2,7 @@
 - Local:         http://localhost:3000
 - Network:       http://192.168.1.5:3000
 - Environments: .env.local
-✓ Ready in 391ms
+✓ Ready in 388ms
 ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
  We detected multiple lockfiles and selected the directory of /Users/rahulpahuja/package-lock.json as the root directory.
  To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
@@ -10,39 +10,18 @@
  Detected additional lockfiles: 
    * /Users/rahulpahuja/Desktop/Apps/dedupsite/package-lock.json
 
+- Experiments (use with caution):
+  · optimizePackageImports
 
-prisma:query SELECT `main`.`Post`.`id`, `main`.`Post`.`title`, `main`.`Post`.`slug`, `main`.`Post`.`excerpt`, `main`.`Post`.`coverImage`, `main`.`Post`.`tags`, `main`.`Post`.`publishedAt`, `main`.`Post`.`authorName`, `main`.`Post`.`content` FROM `main`.`Post` WHERE `main`.`Post`.`published` = ? ORDER BY `main`.`Post`.`publishedAt` DESC LIMIT ? OFFSET ?
- GET /blog 200 in 2.5s (next.js: 2.2s, application-code: 286ms)
-prisma:query SELECT `main`.`Post`.`id`, `main`.`Post`.`title`, `main`.`Post`.`slug`, `main`.`Post`.`excerpt`, `main`.`Post`.`content`, `main`.`Post`.`coverImage`, `main`.`Post`.`tags`, `main`.`Post`.`published`, `main`.`Post`.`publishedAt`, `main`.`Post`.`authorName`, `main`.`Post`.`authorId`, `main`.`Post`.`createdAt`, `main`.`Post`.`updatedAt` FROM `main`.`Post` WHERE (`main`.`Post`.`slug` = ? AND `main`.`Post`.`published` = ?) LIMIT ? OFFSET ?
-prisma:query SELECT `main`.`Post`.`id`, `main`.`Post`.`title`, `main`.`Post`.`slug`, `main`.`Post`.`excerpt`, `main`.`Post`.`content`, `main`.`Post`.`coverImage`, `main`.`Post`.`tags`, `main`.`Post`.`published`, `main`.`Post`.`publishedAt`, `main`.`Post`.`authorName`, `main`.`Post`.`authorId`, `main`.`Post`.`createdAt`, `main`.`Post`.`updatedAt` FROM `main`.`Post` WHERE (`main`.`Post`.`slug` = ? AND `main`.`Post`.`published` = ?) LIMIT ? OFFSET ?
- GET /blog/admin 404 in 731ms (next.js: 672ms, application-code: 58ms)
- GET /blog/admin/login 404 in 222ms (next.js: 194ms, application-code: 28ms)
- GET /admin/login 200 in 343ms (next.js: 297ms, application-code: 46ms)
- POST /api/admin/auth 200 in 250ms (next.js: 240ms, application-code: 9ms)
- GET /admin/blog 200 in 211ms (next.js: 193ms, application-code: 17ms)
- GET /admin/blog 200 in 21ms (next.js: 1797µs, application-code: 20ms)
-[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-prisma:query SELECT 1
-prisma:query SELECT `main`.`Post`.`id`, `main`.`Post`.`title`, `main`.`Post`.`slug`, `main`.`Post`.`published`, `main`.`Post`.`publishedAt`, `main`.`Post`.`createdAt`, `main`.`Post`.`tags`, `main`.`Post`.`excerpt` FROM `main`.`Post` WHERE 1=1 ORDER BY `main`.`Post`.`createdAt` DESC LIMIT ? OFFSET ?
- GET /api/admin/posts 200 in 148ms (next.js: 139ms, application-code: 9ms)
- GET /admin/blog/new 200 in 423ms (next.js: 398ms, application-code: 26ms)
- POST /api/admin/auth 200 in 51ms (next.js: 21ms, application-code: 30ms)
-⨯ SyntaxError: Expected ',' or '}' after property value in JSON at position 462 (line 1 column 463)
-    at JSON.parse (<anonymous>)
- POST /api/admin/posts 500 in 21ms (next.js: 6ms, application-code: 14ms)
- GET /api/blog 200 in 123ms (next.js: 116ms, application-code: 7ms)
-prisma:query SELECT 1
-prisma:query SELECT `main`.`Post`.`id`, `main`.`Post`.`title`, `main`.`Post`.`slug`, `main`.`Post`.`excerpt`, `main`.`Post`.`coverImage`, `main`.`Post`.`tags`, `main`.`Post`.`publishedAt`, `main`.`Post`.`authorName`, `main`.`Post`.`content` FROM `main`.`Post` WHERE `main`.`Post`.`published` = ? ORDER BY `main`.`Post`.`publishedAt` DESC LIMIT ? OFFSET ?
-prisma:query SELECT 1
-prisma:query INSERT INTO `main`.`Post` (`id`, `title`, `slug`, `excerpt`, `content`, `coverImage`, `tags`, `published`, `publishedAt`, `authorName`, `authorId`, `createdAt`, `updatedAt`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?) RETURNING `id` AS `id`, `title` AS `title`, `slug` AS `slug`, `excerpt` AS `excerpt`, `content` AS `content`, `coverImage` AS `coverImage`, `tags` AS `tags`, `published` AS `published`, `publishedAt` AS `publishedAt`, `authorName` AS `authorName`, `authorId` AS `authorId`, `createdAt` AS `createdAt`, `updatedAt` AS `updatedAt`
- POST /api/admin/posts 201 in 23ms (next.js: 7ms, application-code: 16ms)
- GET /api/blog 200 in 7ms (next.js: 1432µs, application-code: 5ms)
-prisma:query SELECT `main`.`Post`.`id`, `main`.`Post`.`title`, `main`.`Post`.`slug`, `main`.`Post`.`excerpt`, `main`.`Post`.`coverImage`, `main`.`Post`.`tags`, `main`.`Post`.`publishedAt`, `main`.`Post`.`authorName`, `main`.`Post`.`content` FROM `main`.`Post` WHERE `main`.`Post`.`published` = ? ORDER BY `main`.`Post`.`publishedAt` DESC LIMIT ? OFFSET ?
- GET /admin/blog/new 200 in 124ms (next.js: 12ms, application-code: 112ms)
- GET /admin/blog 200 in 27ms (next.js: 6ms, application-code: 20ms)
-prisma:query SELECT 1
-prisma:query SELECT `main`.`Post`.`id`, `main`.`Post`.`title`, `main`.`Post`.`slug`, `main`.`Post`.`published`, `main`.`Post`.`publishedAt`, `main`.`Post`.`createdAt`, `main`.`Post`.`tags`, `main`.`Post`.`excerpt` FROM `main`.`Post` WHERE 1=1 ORDER BY `main`.`Post`.`createdAt` DESC LIMIT ? OFFSET ?
- GET /api/admin/posts 200 in 7ms (next.js: 2ms, application-code: 5ms)
-prisma:query SELECT `main`.`Post`.`id`, `main`.`Post`.`title`, `main`.`Post`.`slug`, `main`.`Post`.`excerpt`, `main`.`Post`.`content`, `main`.`Post`.`coverImage`, `main`.`Post`.`tags`, `main`.`Post`.`published`, `main`.`Post`.`publishedAt`, `main`.`Post`.`authorName`, `main`.`Post`.`authorId`, `main`.`Post`.`createdAt`, `main`.`Post`.`updatedAt` FROM `main`.`Post` WHERE (`main`.`Post`.`slug` = ? AND `main`.`Post`.`published` = ?) LIMIT ? OFFSET ?
-prisma:query SELECT `main`.`Post`.`id`, `main`.`Post`.`title`, `main`.`Post`.`slug`, `main`.`Post`.`excerpt`, `main`.`Post`.`content`, `main`.`Post`.`coverImage`, `main`.`Post`.`tags`, `main`.`Post`.`published`, `main`.`Post`.`publishedAt`, `main`.`Post`.`authorName`, `main`.`Post`.`authorId`, `main`.`Post`.`createdAt`, `main`.`Post`.`updatedAt` FROM `main`.`Post` WHERE (`main`.`Post`.`slug` = ? AND `main`.`Post`.`published` = ?) LIMIT ? OFFSET ?
- GET /blog/how-to-use-dedup-android-guide 200 in 313ms (next.js: 25ms, application-code: 287ms)
+⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.5:3000
+- Environments: .env.local
+✓ Ready in 462ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+○ Compiling / ...
+ GET / 200 in 1050ms (next.js: 606ms, application-code: 445ms)
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.

@@ -2,7 +2,7 @@
 
 import { useRef, useMemo, Suspense } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Environment, Points, PointMaterial, Float } from '@react-three/drei'
+import { Points, PointMaterial, Float } from '@react-three/drei'
 import * as THREE from 'three'
 
 /* ───────────────────────────────────────────────────────────────
@@ -586,8 +586,8 @@ export default function DedupScene({ scrollRef }: SceneProps) {
   return (
     <Canvas
       camera={{ position: [0, 0.6, 9], fov: 45, near: 0.1, far: 100 }}
-      dpr={[1, 1.75]}
-      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+      dpr={[1, 1.5]}
+      gl={{ antialias: true, alpha: true, powerPreference: 'default' }}
       style={{ position: 'absolute', inset: 0 }}
     >
       <fog attach="fog" args={['#0F0608', 14, 38]} />
@@ -604,7 +604,6 @@ export default function DedupScene({ scrollRef }: SceneProps) {
           <AiOrb scrollRef={scrollRef} />
 
           <Starfield />
-          <Environment preset="sunset" />
         </ScrollStateBridge>
       </Suspense>
     </Canvas>
