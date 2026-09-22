@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
+import { PRIVACY_POLICY_UPDATED, PrivacyPolicyContent } from '@/components/privacy-policy'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Shield,
@@ -361,7 +362,7 @@ function PrivacyModal({ open, onClose }: { open: boolean; onClose: () => void })
                   Privacy Policy
                 </h2>
                 <span className="mt-1 inline-block rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] text-white/60">
-                  Updated May 2026
+                  Updated {PRIVACY_POLICY_UPDATED}
                 </span>
               </div>
               <button
@@ -373,146 +374,7 @@ function PrivacyModal({ open, onClose }: { open: boolean; onClose: () => void })
               </button>
             </div>
 
-            <div className="space-y-6 text-sm leading-relaxed text-white/75">
-              <section>
-                <p>
-                  Rahul Pahuja (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) operates the{' '}
-                  <strong className="text-white">DeDup</strong> mobile application. Your privacy is
-                  fundamental to how we built this app.
-                </p>
-                <div className="mt-4 flex items-start gap-3 rounded-xl border border-rose-500/20 bg-rose-500/[0.07] p-4">
-                  <Shield className="mt-0.5 h-5 w-5 flex-shrink-0 text-rose-300" />
-                  <p>
-                    <strong className="text-white">Local Processing Guarantee:</strong> All file
-                    scanning, hashing, and duplicate detection happen entirely on your device. No
-                    file names, contents, or metadata from your storage are ever transmitted to our
-                    servers or any third parties.
-                  </p>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="mb-2 font-display text-base font-semibold text-white">
-                  1. Information We Collect
-                </h3>
-                <ul className="list-disc space-y-1.5 pl-5">
-                  <li>
-                    <strong className="text-white/90">Account Data:</strong> If you log in via Google
-                    or Facebook, we collect your name, email, and profile picture to personalize
-                    your experience.
-                  </li>
-                  <li>
-                    <strong className="text-white/90">Device Information:</strong> Device model, OS
-                    version, and unique identifiers via Firebase Analytics to improve app
-                    performance.
-                  </li>
-                  <li>
-                    <strong className="text-white/90">Crash Reports:</strong> Firebase Crashlytics
-                    collects logs when the app crashes to help us fix bugs.
-                  </li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="mb-2 font-display text-base font-semibold text-white">
-                  2. Permissions &amp; Data Usage
-                </h3>
-                <ul className="list-disc space-y-1.5 pl-5">
-                  <li>
-                    <strong className="text-white/90">All Files Access (MANAGE_EXTERNAL_STORAGE):</strong>{' '}
-                    Allows scanning your entire storage to identify duplicate documents, zip files,
-                    and other files consuming space. File hashes are computed locally only.
-                  </li>
-                  <li>
-                    <strong className="text-white/90">Media Permissions (Images, Video, Audio):</strong>{' '}
-                    Allows scanning your gallery and music library for duplicates. Used to generate
-                    thumbnails and perform comparisons.
-                  </li>
-                  <li>
-                    <strong className="text-white/90">Notifications:</strong> To alert you when
-                    storage is running low or a scan is complete.
-                  </li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="mb-2 font-display text-base font-semibold text-white">
-                  3. Third-Party Services
-                </h3>
-                <p>
-                  We use Google Play Services / Firebase (Analytics, Crashlytics, Auth) and the
-                  Facebook Login SDK, which may collect data independently.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="mb-2 font-display text-base font-semibold text-white">
-                  4. Your Rights (GDPR &amp; DPDP)
-                </h3>
-                <ul className="list-disc space-y-1.5 pl-5">
-                  <li>
-                    <strong className="text-white/90">Access</strong> a copy of your personal data
-                  </li>
-                  <li>
-                    <strong className="text-white/90">Rectification</strong> of inaccurate data
-                  </li>
-                  <li>
-                    <strong className="text-white/90">Erasure</strong> (&ldquo;Right to be
-                    Forgotten&rdquo;)
-                  </li>
-                  <li>
-                    <strong className="text-white/90">Data Portability</strong> in a structured
-                    format
-                  </li>
-                  <li>
-                    <strong className="text-white/90">Withdraw Consent</strong> for analytics at any
-                    time via app settings
-                  </li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="mb-2 font-display text-base font-semibold text-white">
-                  5. Security
-                </h3>
-                <p>
-                  We use industry-standard encryption (SQLCipher) to protect your local scan history
-                  and settings stored on your device.
-                </p>
-              </section>
-
-              <section>
-                <h3 className="mb-2 font-display text-base font-semibold text-white">
-                  6. Contact &amp; Grievance Redressal
-                </h3>
-                <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                  <p className="font-semibold text-white">Data Protection / Grievance Officer</p>
-                  <p className="mt-1">
-                    <strong className="text-white/90">Name:</strong> Rahul Pahuja
-                  </p>
-                  <p>
-                    <strong className="text-white/90">Email:</strong>{' '}
-                    <a
-                      href="mailto:therahulpahuja@gmail.com"
-                      className="text-rose-300 underline-offset-4 hover:underline"
-                    >
-                      therahulpahuja@gmail.com
-                    </a>
-                  </p>
-                  <p>
-                    <strong className="text-white/90">Website:</strong>{' '}
-                    <a
-                      href="https://www.therahulpahuja.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-rose-300 underline-offset-4 hover:underline"
-                    >
-                      www.therahulpahuja.com
-                    </a>
-                  </p>
-                </div>
-              </section>
-            </div>
+            <PrivacyPolicyContent />
           </motion.div>
         </motion.div>
       )}
