@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   title: "DeDup — Clean Your Phone, Keep Your Memories",
   description:
     "DeDup finds and removes duplicate photos, videos and files — entirely on your device. Your data never leaves your phone.",
-  keywords: ["DeDup", "duplicate cleaner", "phone cleaner", "on-device", "privacy", "Android"],
+  keywords: ["DeDup", "duplicate cleaner", "phone cleaner", "on-device", "privacy", "Android", "iPhone", "iOS"],
   authors: [{ name: "Rahul Pahuja" }],
   alternates: {
     canonical: "/",

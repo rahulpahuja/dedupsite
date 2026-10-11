@@ -238,21 +238,6 @@
 }
 .btn-primary-3d:hover::after { opacity: 1; }
 
-.btn-secondary-3d {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-soft);
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 500;
-  padding: 13px 22px;
-  border-radius: 999px;
-  cursor: default;
-  letter-spacing: 0.2px;
-  transition: background 0.2s;
-}
 
 /* ── Section spacing ────────────────────────────── */
 .section-shell {

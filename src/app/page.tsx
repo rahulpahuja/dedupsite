@@ -32,6 +32,25 @@ const GeminiAurora = dynamic(() => import('@/components/dedup/GeminiAurora'), {
    ICONS
    ─────────────────────────────────────────────────────────────── */
 
+const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.rp.dedup'
+const APP_STORE_URL = 'https://apps.apple.com/us/app/dedup-ai-photo-cleaner/id6814824281'
+
+function AppleIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701" />
+    </svg>
+  )
+}
+
 function GooglePlayIcon({ className = '' }: { className?: string }) {
   return (
     <svg
@@ -540,7 +559,7 @@ export default function DedupPage() {
             className="flex flex-wrap items-center justify-center gap-3.5"
           >
             <a
-              href="https://play.google.com/store/apps/details?id=com.rp.dedup"
+              href={PLAY_STORE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary-3d"
@@ -548,7 +567,15 @@ export default function DedupPage() {
               <GooglePlayIcon className="h-[18px] w-[18px]" />
               Get it on Google Play
             </a>
-            <div className="btn-secondary-3d">App Store — Coming Soon</div>
+            <a
+              href={APP_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary-3d"
+            >
+              <AppleIcon className="h-[18px] w-[18px]" />
+              Download on the App Store
+            </a>
           </motion.div>
 
           <motion.div
@@ -743,15 +770,24 @@ export default function DedupPage() {
             <p className="relative mx-auto mt-4 max-w-md text-sm leading-relaxed text-white/60 sm:text-base">
               Photos, videos, contacts, WhatsApp clutter — all cleared. Free, private, on-device.
             </p>
-            <div className="relative mt-8 flex justify-center">
+            <div className="relative mt-8 flex flex-wrap justify-center gap-3.5">
               <a
-                href="https://play.google.com/store/apps/details?id=com.rp.dedup"
+                href={PLAY_STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary-3d"
               >
                 <GooglePlayIcon className="h-[18px] w-[18px]" />
                 Download Free on Android
+              </a>
+              <a
+                href={APP_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary-3d"
+              >
+                <AppleIcon className="h-[18px] w-[18px]" />
+                Download Free on iPhone
               </a>
             </div>
           </motion.div>
