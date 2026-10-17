@@ -18,7 +18,6 @@ import {
   UserCheck,
   UserX,
   X,
-  Star,
 } from 'lucide-react'
 
 // 3D scene is loaded only on client (Three.js needs window)
@@ -120,8 +119,8 @@ const SMART_FEATURES: Feature[] = [
   {
     icon: <Receipt className="h-5 w-5" />,
     title: 'Screenshots & Receipts',
-    desc: 'Detects screenshots you no longer need — OTP screens, delivery receipts, payment confirmations, and app notifications saved by accident.',
-    tags: ['OTP screens', 'Receipts', 'Notifications'],
+    desc: 'Sorts your 1,000 most recent photos into groups such as screenshots, memes, receipts and documents, and blurry or poorly exposed shots. You pick what to remove.',
+    tags: ['Screenshots', 'Receipts & docs', 'Blurry shots'],
     tint: 'smart',
   },
   {
@@ -150,21 +149,12 @@ const CONTACTS_FEATURES: Feature[] = [
   },
 ]
 
+// Request styles VoiceQueryParser handles (size, date and type filters).
 const AI_EXAMPLES = [
-  'How much space are my WhatsApp files taking?',
-  'Show me all screenshots from last month',
-  'Find videos larger than 100MB I haven’t opened',
-  'Which app has the most duplicate downloads?',
-]
-
-const AI_DIALOGUE = [
-  { role: 'user', text: 'Find all duplicate photos from my camera' },
-  {
-    role: 'bot',
-    text: 'Found 847 duplicate photos — 2.3 GB that can be freed. 312 are burst shots, 280 are WhatsApp forwards saved twice. Want to review them?',
-  },
-  { role: 'user', text: 'Show me the WhatsApp ones' },
-  { role: 'bot', text: '280 files, 680 MB. Want to review them first?' },
+  'Show me videos larger than 100 MB from last month',
+  'Find screenshots smaller than 5 MB',
+  'All images from last week',
+  'Videos bigger than 1 GB added this year',
 ]
 
 /* ───────────────────────────────────────────────────────────────
@@ -250,78 +240,6 @@ function ClusterHeader({
         {label}
       </span>
       <div className="h-px flex-1 bg-gradient-to-r from-white/15 via-white/5 to-transparent" />
-    </div>
-  )
-}
-
-/* ───────────────────────────────────────────────────────────────
-   AI DIALOGUE — typed-out, looping
-   ─────────────────────────────────────────────────────────────── */
-
-function AiDialogue() {
-  const [visibleCount, setVisibleCount] = useState(0)
-  const [typedText, setTypedText] = useState('')
-
-  useEffect(() => {
-    if (visibleCount >= AI_DIALOGUE.length) {
-      const reset = setTimeout(() => {
-        setVisibleCount(0)
-        setTypedText('')
-      }, 3500)
-      return () => clearTimeout(reset)
-    }
-    const current = AI_DIALOGUE[visibleCount]
-    let i = 0
-    setTypedText('')
-    const typer = setInterval(() => {
-      i++
-      setTypedText(current.text.slice(0, i))
-      if (i >= current.text.length) {
-        clearInterval(typer)
-        setTimeout(() => setVisibleCount((c) => c + 1), 700)
-      }
-    }, 22)
-    return () => clearInterval(typer)
-  }, [visibleCount])
-
-  return (
-    <div className="space-y-3">
-      <AnimatePresence mode="popLayout">
-        {AI_DIALOGUE.slice(0, visibleCount).map((m, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
-          >
-            <div
-              className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
-                m.role === 'user'
-                  ? 'bg-ocean text-white rounded-br-sm'
-                  : 'bg-white/[0.04] border border-white/10 text-white/90 rounded-bl-sm'
-              }`}
-              dangerouslySetInnerHTML={{ __html: m.text }}
-            />
-          </motion.div>
-        ))}
-      </AnimatePresence>
-      {visibleCount < AI_DIALOGUE.length && (
-        <div
-          className={`flex ${AI_DIALOGUE[visibleCount].role === 'user' ? 'justify-end' : 'justify-start'}`}
-        >
-          <div
-            className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
-              AI_DIALOGUE[visibleCount].role === 'user'
-                ? 'bg-ocean text-white rounded-br-sm'
-                : 'bg-white/[0.04] border border-white/10 text-white/90 rounded-bl-sm'
-            }`}
-          >
-            {typedText}
-            <span className="ml-0.5 inline-block h-3.5 w-1.5 animate-pulse bg-current align-middle" />
-          </div>
-        </div>
-      )}
     </div>
   )
 }
@@ -625,8 +543,8 @@ export default function DedupPage() {
               <span className="text-gradient">Crystal clear.</span>
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-white/55 sm:text-base">
-              DeDup shows its work. On supported phones, an on-device assistant also lets you ask
-              about your storage in plain language.
+              DeDup shows its work. You can also find files by voice or text, for example “videos
+              larger than 100 MB from last month”.
             </p>
           </motion.div>
         </CinematicSection>
@@ -688,7 +606,7 @@ export default function DedupPage() {
 
             {/* AI Feature — talk to my storage */}
             <div className="mb-4">
-              <ClusterHeader emoji="✦" label="AI Feature" tint="ai" />
+              <ClusterHeader emoji="✦" label="Ask Your Storage" tint="ai" />
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -696,19 +614,18 @@ export default function DedupPage() {
                 transition={{ duration: 0.7 }}
                 className="overflow-hidden rounded-2xl border border-scan/20 bg-gradient-to-br from-sky/[0.08] via-ocean/[0.06] to-transparent p-6 sm:p-10"
               >
-                <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
+                <div>
                   <div>
                     <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-scan/30 bg-scan/10 px-3 py-1 text-xs font-medium text-scan">
                       <Sparkles className="h-3 w-3" />
-                      On-device assistant · supported phones
+                      Voice or text search
                     </div>
                     <h3 className="font-display text-2xl font-bold text-white sm:text-3xl">
                       Talk to My Storage
                     </h3>
                     <p className="mt-3 max-w-md text-sm leading-relaxed text-white/60">
-                      Ask questions about your own storage in plain language. On supported phones the
-                      assistant runs on-device (Gemini Nano). Voice runs offline after you download a
-                      speech model.
+                      Ask for files by size, type, date or name, by voice or by typing. DeDup turns your
+                      request into filters on the media on your phone and lists what matches.
                     </p>
                     <div className="mt-6 space-y-2">
                       {AI_EXAMPLES.map((ex, i) => (
@@ -725,17 +642,6 @@ export default function DedupPage() {
                         </motion.div>
                       ))}
                     </div>
-                  </div>
-
-                  <div className="rounded-2xl border border-white/10 bg-[#0D2347]/80 p-5 backdrop-blur-md sm:p-6">
-                    <div className="mb-4 flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-xs font-medium text-white/50">
-                        <span className="flex h-2 w-2 rounded-full bg-keep" />
-                        Example conversation
-                      </div>
-                      <Star className="h-3.5 w-3.5 text-scan" />
-                    </div>
-                    <AiDialogue />
                   </div>
                 </div>
               </motion.div>
