@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { BrandLogo } from '@/components/brand/brand-logo'
 
 export default function AdminLoginPage() {
   const router = useRouter()
@@ -34,14 +35,14 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#0F0608] px-6">
+    <main className="flex min-h-screen items-center justify-center bg-[#060D1F] px-6">
       <div className="w-full max-w-sm">
         <Link
           href="/"
-          className="mb-8 block font-display text-2xl font-bold text-white"
+          className="mb-8 inline-flex items-center"
         >
-          De<span className="bg-gradient-to-r from-rose-400 to-orange-400 bg-clip-text text-transparent">Dup</span>
-          <span className="ml-2 text-sm font-normal text-white/40">Admin</span>
+          <BrandLogo />
+          <span className="ml-2 font-display text-sm font-normal text-white/40">Admin</span>
         </Link>
 
         <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-8">
@@ -59,19 +60,19 @@ export default function AdminLoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 autoFocus
                 required
-                className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white placeholder-white/25 outline-none transition focus:border-rose-500/40 focus:ring-1 focus:ring-rose-500/20"
+                className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white placeholder-white/25 outline-none transition focus:border-sky/40 focus:ring-1 focus:ring-sky/20"
                 placeholder="••••••••"
               />
             </div>
 
             {error && (
-              <p className="text-xs text-rose-400">{error}</p>
+              <p className="text-xs text-remove">{error}</p>
             )}
 
             <button
               type="submit"
               disabled={loading || !password}
-              className="w-full rounded-xl bg-gradient-to-r from-rose-500 to-orange-500 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-40"
+              className="w-full rounded-xl bg-ocean py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-40"
             >
               {loading ? 'Signing in…' : 'Sign in'}
             </button>

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { BrandLogo } from '@/components/brand/brand-logo'
 import { notFound } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import { db } from '@/lib/db'
@@ -44,17 +45,14 @@ export default async function BlogPostPage({ params }: Props) {
   const readTime = estimateReadTime(post.content ?? '')
 
   return (
-    <main className="relative min-h-screen bg-[#0F0608]">
-      <div className="pointer-events-none fixed inset-x-0 top-0 z-[2] h-32 bg-gradient-to-b from-[#0F0608] to-transparent" />
+    <main className="relative min-h-screen bg-[#060D1F]">
+      <div className="pointer-events-none fixed inset-x-0 top-0 z-[2] h-32 bg-gradient-to-b from-[#060D1F] to-transparent" />
 
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-[100] px-6 py-4">
         <div className="mx-auto flex max-w-3xl items-center justify-between">
-          <Link
-            href="/"
-            className="font-display text-xl font-bold tracking-tight text-white"
-          >
-            De<span className="bg-gradient-to-r from-rose-400 to-orange-400 bg-clip-text text-transparent">Dup</span>
+          <Link href="/" aria-label="DeDup home">
+            <BrandLogo />
           </Link>
           <Link
             href="/blog"
@@ -85,7 +83,7 @@ export default async function BlogPostPage({ params }: Props) {
               {tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full border border-rose-500/20 bg-rose-500/10 px-3 py-1 text-[11px] font-medium text-rose-300"
+                  className="rounded-full border border-sky/20 bg-sky/10 px-3 py-1 text-[11px] font-medium text-sky"
                 >
                   {tag}
                 </span>
@@ -137,7 +135,7 @@ export default async function BlogPostPage({ params }: Props) {
                 ),
                 li: ({ children }) => <li className="leading-relaxed">{children}</li>,
                 blockquote: ({ children }) => (
-                  <blockquote className="my-6 border-l-2 border-rose-400 pl-5 text-white/55 italic">
+                  <blockquote className="my-6 border-l-2 border-sky pl-5 text-white/55 italic">
                     {children}
                   </blockquote>
                 ),
@@ -152,7 +150,7 @@ export default async function BlogPostPage({ params }: Props) {
                   }
                   return (
                     <code
-                      className="rounded bg-white/[0.08] px-1.5 py-0.5 text-[0.85em] text-rose-200"
+                      className="rounded bg-white/[0.08] px-1.5 py-0.5 text-[0.85em] text-sky"
                       {...props}
                     >
                       {children}
@@ -164,7 +162,7 @@ export default async function BlogPostPage({ params }: Props) {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-rose-300 underline underline-offset-4 transition hover:text-rose-200"
+                    className="text-sky underline underline-offset-4 transition hover:text-white"
                   >
                     {children}
                   </a>
@@ -200,12 +198,12 @@ export default async function BlogPostPage({ params }: Props) {
       </article>
 
       {/* Footer */}
-      <footer className="relative border-t border-white/[0.06] bg-[#0F0608] px-6 py-10">
+      <footer className="relative border-t border-white/[0.06] bg-[#060D1F] px-6 py-10">
         <div className="mx-auto flex max-w-3xl flex-col items-center justify-between gap-4 sm:flex-row">
           <Link href="/" className="font-display text-base font-bold text-white">
             DeDup
           </Link>
-          <p className="text-center text-xs text-white/45">© 2025 Mobile1x</p>
+          <p className="text-center text-xs text-white/45">© 2006 Mobile1x</p>
           <Link href="/blog" className="text-xs text-white/55 transition hover:text-white">
             More posts →
           </Link>

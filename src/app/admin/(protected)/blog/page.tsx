@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { BrandLogo } from '@/components/brand/brand-logo'
 import { useRouter } from 'next/navigation'
 
 type Post = {
@@ -50,21 +51,21 @@ export default function AdminBlogPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#0F0608] px-6 py-10">
+    <main className="min-h-screen bg-[#060D1F] px-6 py-10">
       <div className="mx-auto max-w-4xl">
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <Link href="/" className="font-display text-xl font-bold text-white">
-              De<span className="bg-gradient-to-r from-rose-400 to-orange-400 bg-clip-text text-transparent">Dup</span>
-              <span className="ml-2 text-sm font-normal text-white/40">Admin</span>
+            <Link href="/" className="inline-flex items-center">
+              <BrandLogo />
+              <span className="ml-2 font-display text-sm font-normal text-white/40">Admin</span>
             </Link>
             <p className="mt-1 text-sm text-white/40">Manage blog posts</p>
           </div>
           <div className="flex items-center gap-3">
             <Link
               href="/admin/blog/new"
-              className="rounded-xl bg-gradient-to-r from-rose-500 to-orange-500 px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
+              className="rounded-xl bg-ocean px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
             >
               + New post
             </Link>
@@ -84,7 +85,7 @@ export default function AdminBlogPage() {
           ) : posts.length === 0 ? (
             <div className="py-20 text-center text-sm text-white/30">
               No posts yet.{' '}
-              <Link href="/admin/blog/new" className="text-rose-400 underline underline-offset-4">
+              <Link href="/admin/blog/new" className="text-sky underline underline-offset-4">
                 Create your first post
               </Link>
             </div>
@@ -109,12 +110,12 @@ export default function AdminBlogPage() {
                       <span
                         className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium ${
                           post.published
-                            ? 'border border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
+                            ? 'border border-keep/30 bg-keep/10 text-keep'
                             : 'border border-white/10 bg-white/[0.04] text-white/40'
                         }`}
                       >
                         <span
-                          className={`h-1.5 w-1.5 rounded-full ${post.published ? 'bg-emerald-400' : 'bg-white/30'}`}
+                          className={`h-1.5 w-1.5 rounded-full ${post.published ? 'bg-keep' : 'bg-white/30'}`}
                         />
                         {post.published ? 'Published' : 'Draft'}
                       </span>
@@ -142,7 +143,7 @@ export default function AdminBlogPage() {
                         <button
                           onClick={() => handleDelete(post.id, post.title)}
                           disabled={deleting === post.id}
-                          className="rounded-lg border border-rose-500/20 bg-rose-500/[0.05] px-3 py-1.5 text-xs text-rose-400 transition hover:bg-rose-500/10 disabled:opacity-40"
+                          className="rounded-lg border border-remove/20 bg-remove/[0.05] px-3 py-1.5 text-xs text-remove transition hover:bg-remove/10 disabled:opacity-40"
                         >
                           {deleting === post.id ? '…' : 'Delete'}
                         </button>

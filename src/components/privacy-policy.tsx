@@ -5,7 +5,7 @@ export const PRIVACY_POLICY_UPDATED = 'September 22, 2026'
 
 const h3 = 'mb-2 font-display text-base font-semibold text-white'
 const term = 'text-white/90'
-const link = 'text-rose-300 underline-offset-4 hover:underline'
+const link = 'text-sky underline-offset-4 hover:underline'
 
 /**
  * The DeDup privacy policy for the Android and iOS apps. Rendered by the /privacy page (the URL
@@ -20,8 +20,8 @@ export function PrivacyPolicyContent() {
           <strong className="text-white">DeDup</strong> apps for Android and iPhone. This policy
           explains what the apps access on your device, what they send off it, and why.
         </p>
-        <div className="mt-4 flex items-start gap-3 rounded-xl border border-rose-500/20 bg-rose-500/[0.07] p-4">
-          <Shield className="mt-0.5 h-5 w-5 flex-shrink-0 text-rose-300" />
+        <div className="mt-4 flex items-start gap-3 rounded-xl border border-sky/20 bg-sky/[0.07] p-4">
+          <Shield className="mt-0.5 h-5 w-5 flex-shrink-0 text-sky" />
           <p>
             <strong className="text-white">Local Processing Guarantee:</strong> Scanning, hashing,
             duplicate detection, photo labelling for search and contact matching all happen on your

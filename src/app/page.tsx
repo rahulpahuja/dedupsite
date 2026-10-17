@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
+import { BrandLogo } from '@/components/brand/brand-logo'
 import { PRIVACY_POLICY_UPDATED, PrivacyPolicyContent } from '@/components/privacy-policy'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -112,7 +113,7 @@ const SMART_FEATURES: Feature[] = [
   {
     icon: <MessagesSquare className="h-5 w-5" />,
     title: 'WhatsApp Cleaner',
-    desc: 'Automatically surfaces forwarded memes, viral screenshots, and sticker packs clogging your WhatsApp Media folder. One-tap bulk delete.',
+    desc: 'Surfaces forwarded memes, viral screenshots and sticker packs piling up in your WhatsApp Media folder. You review them before anything is removed.',
     tags: ['Forwarded memes', 'Sticker packs', 'Group media'],
     tint: 'smart',
   },
@@ -125,7 +126,7 @@ const SMART_FEATURES: Feature[] = [
   },
   {
     icon: <Download className="h-5 w-5" />,
-    title: 'Downloads Junk',
+    title: 'Downloads Clean-up',
     desc: 'Finds re-downloaded files, duplicate APKs, and forgotten install packages sitting in your Downloads folder eating up gigabytes.',
     tags: ['Duplicate APKs', 'Re-downloads', 'Install leftovers'],
     tint: 'smart',
@@ -142,7 +143,7 @@ const CONTACTS_FEATURES: Feature[] = [
   },
   {
     icon: <UserX className="h-5 w-5" />,
-    title: 'Blank & Junk Contacts',
+    title: 'Blank Contacts',
     desc: 'Surfaces contacts with no name, no number, or only a partial entry — the noise that builds up from years of syncing across phones and SIMs.',
     tags: ['No-number entries', 'Partial contacts', 'SIM leftovers'],
     tint: 'contacts',
@@ -162,41 +163,33 @@ const AI_DIALOGUE = [
     role: 'bot',
     text: 'Found 847 duplicate photos — 2.3 GB that can be freed. 312 are burst shots, 280 are WhatsApp forwards saved twice. Want to review them?',
   },
-  { role: 'user', text: 'Delete the WhatsApp ones automatically' },
-  { role: 'bot', text: '280 files removed. Freed 680 MB. Your originals are untouched.' },
+  { role: 'user', text: 'Show me the WhatsApp ones' },
+  { role: 'bot', text: '280 files, 680 MB. Want to review them first?' },
 ]
 
 /* ───────────────────────────────────────────────────────────────
    TINT HELPERS
    ─────────────────────────────────────────────────────────────── */
 
-const TINTS: Record<
-  Feature['tint'],
-  { badge: string; icon: string; tag: string; glow: string }
-> = {
-  media: {
-    badge: 'bg-rose-500/15 text-rose-300 border-rose-500/30',
-    icon: 'from-rose-500/30 to-rose-500/0 text-rose-300',
-    tag: 'bg-rose-500/10 text-rose-200/80 border-rose-500/20',
-    glow: 'group-hover:shadow-[0_0_50px_-12px_rgba(251,113,133,0.5)]',
-  },
-  smart: {
-    badge: 'bg-orange-500/15 text-orange-300 border-orange-500/30',
-    icon: 'from-orange-500/30 to-orange-500/0 text-orange-300',
-    tag: 'bg-orange-500/10 text-orange-200/80 border-orange-500/20',
-    glow: 'group-hover:shadow-[0_0_50px_-12px_rgba(251,146,60,0.5)]',
-  },
-  contacts: {
-    badge: 'bg-pink-500/15 text-pink-300 border-pink-500/30',
-    icon: 'from-pink-500/30 to-pink-500/0 text-pink-300',
-    tag: 'bg-pink-500/10 text-pink-200/80 border-pink-500/20',
-    glow: 'group-hover:shadow-[0_0_50px_-12px_rgba(244,63,94,0.5)]',
-  },
+type Tint = { badge: string; icon: string; tag: string; glow: string }
+
+// Sky is the brand accent for content; Scan Cyan is kept for the AI feature only.
+const SKY_TINT: Tint = {
+  badge: 'bg-sky/15 text-sky border-sky/30',
+  icon: 'from-sky/30 to-sky/0 text-sky',
+  tag: 'bg-sky/10 text-sky/80 border-sky/20',
+  glow: 'group-hover:shadow-[0_0_50px_-12px_rgba(95,163,255,0.5)]',
+}
+
+const TINTS: Record<Feature['tint'], Tint> = {
+  media: SKY_TINT,
+  smart: SKY_TINT,
+  contacts: SKY_TINT,
   ai: {
-    badge: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
-    icon: 'from-amber-500/30 to-amber-500/0 text-amber-300',
-    tag: 'bg-amber-500/10 text-amber-200/80 border-amber-500/20',
-    glow: 'group-hover:shadow-[0_0_50px_-12px_rgba(251,191,36,0.5)]',
+    badge: 'bg-scan/15 text-scan border-scan/30',
+    icon: 'from-scan/30 to-scan/0 text-scan',
+    tag: 'bg-scan/10 text-scan/80 border-scan/20',
+    glow: 'group-hover:shadow-[0_0_50px_-12px_rgba(0,229,255,0.45)]',
   },
 }
 
@@ -305,7 +298,7 @@ function AiDialogue() {
             <div
               className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
                 m.role === 'user'
-                  ? 'bg-gradient-to-br from-pink-500 to-orange-500 text-white rounded-br-sm'
+                  ? 'bg-ocean text-white rounded-br-sm'
                   : 'bg-white/[0.04] border border-white/10 text-white/90 rounded-bl-sm'
               }`}
               dangerouslySetInnerHTML={{ __html: m.text }}
@@ -320,7 +313,7 @@ function AiDialogue() {
           <div
             className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
               AI_DIALOGUE[visibleCount].role === 'user'
-                ? 'bg-gradient-to-br from-pink-500 to-orange-500 text-white rounded-br-sm'
+                ? 'bg-ocean text-white rounded-br-sm'
                 : 'bg-white/[0.04] border border-white/10 text-white/90 rounded-bl-sm'
             }`}
           >
@@ -373,7 +366,7 @@ function PrivacyModal({ open, onClose }: { open: boolean; onClose: () => void })
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.98 }}
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-            className="modal-scroll relative z-10 max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-white/10 bg-[#1A0809] p-6 shadow-2xl sm:p-8"
+            className="modal-scroll relative z-10 max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-white/10 bg-[#0D2347] p-6 shadow-2xl sm:p-8"
           >
             <div className="mb-6 flex items-start justify-between gap-4">
               <div>
@@ -437,7 +430,7 @@ function ScrollProgressBar({ progress }: { progress: number }) {
   return (
     <div className="fixed left-0 top-0 z-[150] h-0.5 w-full bg-transparent">
       <div
-        className="h-full origin-left bg-gradient-to-r from-pink-500 via-orange-400 to-amber-400"
+        className="h-full origin-left bg-gradient-to-r from-ocean via-sky to-scan"
         style={{ transform: `scaleX(${progress})`, transition: 'transform 0.1s linear' }}
       />
     </div>
@@ -485,15 +478,13 @@ export default function DedupPage() {
       </div>
 
       {/* Top + bottom fades for text legibility */}
-      <div className="pointer-events-none fixed inset-x-0 top-0 z-[2] h-32 bg-gradient-to-b from-[#0F0608] to-transparent" />
-      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-[2] h-40 bg-gradient-to-t from-[#0F0608] to-transparent" />
+      <div className="pointer-events-none fixed inset-x-0 top-0 z-[2] h-32 bg-gradient-to-b from-[#060D1F] to-transparent" />
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-[2] h-40 bg-gradient-to-t from-[#060D1F] to-transparent" />
 
       {/* ── NAV ─────────────────────────────────────────── */}
       <nav className="fixed top-0 left-0 right-0 z-[100] px-6 py-4">
         <div className="section-shell flex items-center justify-between">
-          <div className="font-display text-xl font-bold tracking-tight text-gradient-white">
-            De<span className="text-gradient">Dup</span>
-          </div>
+          <BrandLogo />
           <div className="flex items-center gap-3">
             <a
               href="/blog"
@@ -524,11 +515,11 @@ export default function DedupPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="inline-flex items-center gap-3 self-center text-[11px] font-medium uppercase tracking-[0.18em] text-rose-300"
+            className="inline-flex items-center gap-3 self-center text-[11px] font-medium uppercase tracking-[0.18em] text-sky"
           >
-            <span className="h-px w-6 bg-rose-400/60" />
+            <span className="h-px w-6 bg-sky/60" />
             On-Device · Private · Free
-            <span className="h-px w-6 bg-rose-400/60" />
+            <span className="h-px w-6 bg-sky/60" />
           </motion.div>
 
           <motion.h1
@@ -548,8 +539,8 @@ export default function DedupPage() {
             transition={{ duration: 0.9, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-xl text-base leading-relaxed text-white/65 sm:text-lg"
           >
-            DeDup finds every duplicate photo, video, and file on your Android — instantly, entirely
-            on-device. Your data never leaves your phone.
+            DeDup finds duplicate and near-duplicate photos, videos and files on your phone, and
+            shows you what it would remove before it removes anything.
           </motion.p>
 
           <motion.div
@@ -584,8 +575,8 @@ export default function DedupPage() {
             transition={{ duration: 0.8, delay: 0.85 }}
             className="flex items-center gap-2 text-xs text-white/50"
           >
-            <Shield className="h-3.5 w-3.5 text-emerald-400" />
-            Zero cloud uploads. Everything stays on your device.
+            <Shield className="h-3.5 w-3.5 text-keep" />
+            Your photos and files stay on your phone.
           </motion.div>
         </CinematicSection>
 
@@ -598,8 +589,8 @@ export default function DedupPage() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-md"
           >
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-rose-500/30 bg-rose-500/10 px-3 py-1 text-xs font-semibold text-rose-300">
-              <span className="h-1.5 w-1.5 rounded-full bg-rose-400" />
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-sky/30 bg-sky/10 px-3 py-1 text-xs font-semibold text-sky">
+              <span className="h-1.5 w-1.5 rounded-full bg-sky" />
               The merge
             </div>
             <h2 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
@@ -624,8 +615,8 @@ export default function DedupPage() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-md"
           >
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-xs font-semibold text-orange-300">
-              <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-sky/30 bg-sky/10 px-3 py-1 text-xs font-semibold text-sky">
+              <span className="h-1.5 w-1.5 rounded-full bg-sky" />
               The reveal
             </div>
             <h2 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
@@ -634,8 +625,8 @@ export default function DedupPage() {
               <span className="text-gradient">Crystal clear.</span>
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-white/55 sm:text-base">
-              DeDup doesn’t just delete — it organises. And with on-device AI, you can ask your
-              phone anything about its own storage, in plain language.
+              DeDup shows its work. On supported phones, an on-device assistant also lets you ask
+              about your storage in plain language.
             </p>
           </motion.div>
         </CinematicSection>
@@ -643,7 +634,7 @@ export default function DedupPage() {
         {/* ── FEATURE GRID SECTION (after cinematic) ───── */}
         {/* The 3D canvas fades out via the bottom gradient as this content
             begins; section has a more opaque background to remain legible. */}
-        <section className="relative bg-[#0F0608]/85 px-6 pb-24 pt-32 backdrop-blur-md">
+        <section className="relative bg-[#060D1F]/85 px-6 pb-24 pt-32 backdrop-blur-md">
           <div className="section-shell">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -652,7 +643,7 @@ export default function DedupPage() {
               transition={{ duration: 0.7 }}
               className="mb-12 text-center"
             >
-              <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-rose-300">
+              <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-sky">
                 What DeDup Does
               </div>
               <h2 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-[44px]">
@@ -661,8 +652,7 @@ export default function DedupPage() {
                 One app to clear it all.
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-white/55 sm:text-base">
-                DeDup goes beyond basic duplicate finders — it understands your media, your contacts,
-                your chats, and your storage.
+                DeDup finds duplicates across your media, contacts, chats and downloads.
               </p>
             </motion.div>
 
@@ -704,20 +694,21 @@ export default function DedupPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.7 }}
-                className="overflow-hidden rounded-2xl border border-amber-500/20 bg-gradient-to-br from-amber-500/[0.07] via-rose-500/[0.04] to-transparent p-6 sm:p-10"
+                className="overflow-hidden rounded-2xl border border-scan/20 bg-gradient-to-br from-sky/[0.08] via-ocean/[0.06] to-transparent p-6 sm:p-10"
               >
                 <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
                   <div>
-                    <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-300">
+                    <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-scan/30 bg-scan/10 px-3 py-1 text-xs font-medium text-scan">
                       <Sparkles className="h-3 w-3" />
-                      On-Device AI
+                      On-device assistant · supported phones
                     </div>
                     <h3 className="font-display text-2xl font-bold text-white sm:text-3xl">
                       Talk to My Storage
                     </h3>
                     <p className="mt-3 max-w-md text-sm leading-relaxed text-white/60">
-                      Ask your phone questions about its own storage — in plain language. No
-                      dashboards to navigate, no folders to dig through. Just ask.
+                      Ask questions about your own storage in plain language. On supported phones the
+                      assistant runs on-device (Gemini Nano). Voice runs offline after you download a
+                      speech model.
                     </p>
                     <div className="mt-6 space-y-2">
                       {AI_EXAMPLES.map((ex, i) => (
@@ -729,20 +720,20 @@ export default function DedupPage() {
                           transition={{ duration: 0.4, delay: i * 0.08 }}
                           className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs text-white/70"
                         >
-                          <MessageCircle className="h-3.5 w-3.5 flex-shrink-0 text-amber-300" />
+                          <MessageCircle className="h-3.5 w-3.5 flex-shrink-0 text-scan" />
                           {ex}
                         </motion.div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="rounded-2xl border border-white/10 bg-[#1A0809]/80 p-5 backdrop-blur-md sm:p-6">
+                  <div className="rounded-2xl border border-white/10 bg-[#0D2347]/80 p-5 backdrop-blur-md sm:p-6">
                     <div className="mb-4 flex items-center justify-between">
                       <div className="flex items-center gap-2 text-xs font-medium text-white/50">
-                        <span className="flex h-2 w-2 rounded-full bg-emerald-400" />
-                        DeDup AI · Live demo
+                        <span className="flex h-2 w-2 rounded-full bg-keep" />
+                        Example conversation
                       </div>
-                      <Star className="h-3.5 w-3.5 text-amber-300" />
+                      <Star className="h-3.5 w-3.5 text-scan" />
                     </div>
                     <AiDialogue />
                   </div>
@@ -753,22 +744,22 @@ export default function DedupPage() {
         </section>
 
         {/* ── BOTTOM CTA ──────────────────────────────── */}
-        <section className="relative bg-[#0F0608]/85 px-6 py-24 backdrop-blur-md">
+        <section className="relative bg-[#060D1F]/85 px-6 py-24 backdrop-blur-md">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.7 }}
-            className="section-shell relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-pink-500/[0.1] via-orange-500/[0.05] to-transparent px-6 py-16 text-center sm:px-12 sm:py-20"
+            className="section-shell relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-ocean/20 via-sky/[0.06] to-transparent px-6 py-16 text-center sm:px-12 sm:py-20"
           >
-            <div className="pointer-events-none absolute -left-20 -top-20 h-60 w-60 rounded-full bg-rose-500/20 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-20 -right-20 h-60 w-60 rounded-full bg-orange-500/15 blur-3xl" />
+            <div className="pointer-events-none absolute -left-20 -top-20 h-60 w-60 rounded-full bg-ocean/30 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-20 -right-20 h-60 w-60 rounded-full bg-sky/15 blur-3xl" />
 
             <h2 className="relative font-display text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-              Your phone. Cleaner. Faster.
+              Storage full again?
             </h2>
             <p className="relative mx-auto mt-4 max-w-md text-sm leading-relaxed text-white/60 sm:text-base">
-              Photos, videos, contacts, WhatsApp clutter — all cleared. Free, private, on-device.
+              DeDup finds duplicate photos, videos and files on your phone and shows you what it would remove first. Free today. No ads.
             </p>
             <div className="relative mt-8 flex flex-wrap justify-center gap-3.5">
               <a
@@ -778,7 +769,7 @@ export default function DedupPage() {
                 className="btn-primary-3d"
               >
                 <GooglePlayIcon className="h-[18px] w-[18px]" />
-                Download Free on Android
+                Get DeDup on Google Play
               </a>
               <a
                 href={APP_STORE_URL}
@@ -794,11 +785,11 @@ export default function DedupPage() {
         </section>
 
         {/* ── FOOTER ──────────────────────────────────── */}
-        <footer className="relative border-t border-white/[0.06] bg-[#0F0608] px-6 py-10">
+        <footer className="relative border-t border-white/[0.06] bg-[#060D1F] px-6 py-10">
           <div className="section-shell flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <div className="font-display text-base font-bold text-gradient-white">DeDup</div>
+            <BrandLogo />
             <p className="text-center text-xs text-white/45">
-              © 2025 Mobile1x ·{' '}
+              © 2006 Mobile1x ·{' '}
               <a
                 href="mailto:therahulpahuja@gmail.com"
                 className="text-white/65 underline-offset-4 hover:text-white hover:underline"

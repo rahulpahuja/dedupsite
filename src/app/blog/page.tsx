@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { BrandLogo } from '@/components/brand/brand-logo'
 import { db } from '@/lib/db'
 import { parseTags, estimateReadTime } from '@/lib/auth'
 
@@ -36,18 +37,15 @@ export default async function BlogListPage() {
   })
 
   return (
-    <main className="relative min-h-screen bg-[#0F0608]">
+    <main className="relative min-h-screen bg-[#060D1F]">
       {/* Top fade */}
-      <div className="pointer-events-none fixed inset-x-0 top-0 z-[2] h-32 bg-gradient-to-b from-[#0F0608] to-transparent" />
+      <div className="pointer-events-none fixed inset-x-0 top-0 z-[2] h-32 bg-gradient-to-b from-[#060D1F] to-transparent" />
 
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-[100] px-6 py-4">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <Link
-            href="/"
-            className="font-display text-xl font-bold tracking-tight text-white"
-          >
-            De<span className="bg-gradient-to-r from-rose-400 to-orange-400 bg-clip-text text-transparent">Dup</span>
+          <Link href="/" aria-label="DeDup home">
+            <BrandLogo />
           </Link>
           <div className="flex items-center gap-4 text-sm">
             <Link
@@ -70,12 +68,12 @@ export default async function BlogListPage() {
         <div className="mx-auto max-w-5xl">
           {/* Header */}
           <div className="mb-16 text-center">
-            <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-rose-300">
+            <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-sky">
               From the Team
             </div>
             <h1 className="font-display text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
               The DeDup{' '}
-              <span className="bg-gradient-to-r from-rose-400 to-orange-400 bg-clip-text text-transparent">
+              <span className="text-gradient">
                 Blog
               </span>
             </h1>
@@ -98,7 +96,7 @@ export default async function BlogListPage() {
                   <Link
                     key={post.id}
                     href={`/blog/${post.slug}`}
-                    className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.02] transition duration-300 hover:border-rose-500/30 hover:bg-white/[0.04] hover:shadow-[0_0_50px_-12px_rgba(251,113,133,0.3)]"
+                    className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.02] transition duration-300 hover:border-sky/30 hover:bg-white/[0.04] hover:shadow-[0_0_50px_-12px_rgba(95,163,255,0.3)]"
                   >
                     {post.coverImage && (
                       <div className="relative h-44 overflow-hidden">
@@ -108,7 +106,7 @@ export default async function BlogListPage() {
                           alt={post.title}
                           className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0F0608]/80 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#060D1F]/80 to-transparent" />
                       </div>
                     )}
                     <div className="flex flex-1 flex-col p-6">
@@ -117,14 +115,14 @@ export default async function BlogListPage() {
                           {tags.map((tag) => (
                             <span
                               key={tag}
-                              className="rounded-full border border-rose-500/20 bg-rose-500/10 px-2.5 py-0.5 text-[11px] font-medium text-rose-300"
+                              className="rounded-full border border-sky/20 bg-sky/10 px-2.5 py-0.5 text-[11px] font-medium text-sky"
                             >
                               {tag}
                             </span>
                           ))}
                         </div>
                       )}
-                      <h2 className="font-display text-lg font-semibold leading-snug text-white transition group-hover:text-rose-100">
+                      <h2 className="font-display text-lg font-semibold leading-snug text-white transition group-hover:text-white">
                         {post.title}
                       </h2>
                       {post.excerpt && (
@@ -149,12 +147,12 @@ export default async function BlogListPage() {
       </div>
 
       {/* Footer */}
-      <footer className="relative border-t border-white/[0.06] bg-[#0F0608] px-6 py-10">
+      <footer className="relative border-t border-white/[0.06] bg-[#060D1F] px-6 py-10">
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 sm:flex-row">
           <Link href="/" className="font-display text-base font-bold text-white">
             DeDup
           </Link>
-          <p className="text-center text-xs text-white/45">© 2025 Mobile1x</p>
+          <p className="text-center text-xs text-white/45">© 2006 Mobile1x</p>
           <Link href="/" className="text-xs text-white/55 transition hover:text-white">
             ← Back to home
           </Link>

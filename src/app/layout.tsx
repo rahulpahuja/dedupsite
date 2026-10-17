@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
@@ -20,10 +20,20 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://dedup.space"),
-  title: "DeDup — Clean Your Phone, Keep Your Memories",
+  title: "DeDup: Duplicate Photo & File Cleaner",
   description:
-    "DeDup finds and removes duplicate photos, videos and files — entirely on your device. Your data never leaves your phone.",
-  keywords: ["DeDup", "duplicate cleaner", "phone cleaner", "on-device", "privacy", "Android", "iPhone", "iOS"],
+    "DeDup finds duplicate photos, videos and files on your Android phone or iPhone. It scans on your device, and removals go to a trash you can restore from.",
+  keywords: [
+    "DeDup",
+    "duplicate photo cleaner",
+    "duplicate file finder",
+    "free up storage",
+    "near-duplicate photos",
+    "on-device",
+    "Android",
+    "iPhone",
+    "iOS",
+  ],
   authors: [{ name: "Rahul Pahuja" }],
   alternates: {
     canonical: "/",
@@ -34,9 +44,9 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true },
   },
   openGraph: {
-    title: "DeDup — Clean Your Phone, Keep Your Memories",
+    title: "DeDup: Duplicate Photo & File Cleaner",
     description:
-      "DeDup finds and removes duplicate photos, videos and files — entirely on your device.",
+      "DeDup finds duplicate photos, videos and files on your Android phone or iPhone. It scans on your device, and removals go to a trash you can restore from.",
     url: "https://dedup.space",
     siteName: "DeDup",
     type: "website",
@@ -44,11 +54,15 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "DeDup — Clean Your Phone, Keep Your Memories",
+    title: "DeDup: Duplicate Photo & File Cleaner",
     description:
-      "DeDup finds and removes duplicate photos, videos and files — entirely on your device.",
+      "DeDup finds duplicate photos, videos and files on your Android phone or iPhone. It scans on your device, and removals go to a trash you can restore from.",
     creator: "@therahulpahuja",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#060D1F",
 };
 
 export default function RootLayout({
@@ -66,7 +80,7 @@ export default function RootLayout({
         <link rel="preload" href="/dedup-assets/ai-orb.png" as="image" />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${inter.variable} antialiased bg-[#0F0608] text-[#FFF5F0]`}
+        className={`${spaceGrotesk.variable} ${inter.variable} antialiased bg-night text-white`}
       >
         {/* ── Google Analytics (gtag.js) — GA4 ID: G-E6B5M8JKHP ── */}
         <Script
