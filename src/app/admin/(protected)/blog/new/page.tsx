@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
+import { EMPTY_POST_META, PostMetaFields, type PostMetaValue } from '@/components/blog/post-meta-fields'
 
 function toSlug(title: string) {
   return title
@@ -23,6 +24,7 @@ export default function NewPostPage() {
   const [content, setContent] = useState('')
   const [coverImage, setCoverImage] = useState('')
   const [tags, setTags] = useState('')
+  const [meta, setMeta] = useState<PostMetaValue>(EMPTY_POST_META)
   const [preview, setPreview] = useState(false)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
@@ -43,7 +45,7 @@ export default function NewPostPage() {
       const res = await fetch('/api/admin/posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, slug, excerpt, content, coverImage, tags, published: publish }),
+        body: JSON.stringify({ title, slug, excerpt, content, coverImage, tags, ...meta, published: publish }),
       })
       if (!res.ok) {
         const d = await res.json()
@@ -216,6 +218,7 @@ export default function NewPostPage() {
                     className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2.5 text-xs text-white/80 placeholder-white/20 outline-none transition focus:border-sky/40"
                   />
                 </div>
+                <PostMetaFields value={meta} onChange={setMeta} />
               </div>
             </div>
 

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { isAdminAuthenticated } from '@/lib/auth'
+import { parsePostMeta } from '@/lib/blog-meta'
 
 export async function GET() {
   if (!(await isAdminAuthenticated()))
@@ -17,6 +18,9 @@ export async function GET() {
       createdAt: true,
       tags: true,
       excerpt: true,
+      platform: true,
+      appVersion: true,
+      osVersion: true,
     },
   })
   return NextResponse.json({ posts })
@@ -32,6 +36,8 @@ export async function POST(req: Request) {
   if (!title || !slug) {
     return NextResponse.json({ error: 'Title and slug are required' }, { status: 400 })
   }
+  const meta = parsePostMeta(body)
+  if (!meta.ok) return NextResponse.json({ error: meta.error }, { status: 400 })
 
   const post = await db.post.create({
     data: {
@@ -41,6 +47,7 @@ export async function POST(req: Request) {
       content: content || null,
       coverImage: coverImage || null,
       tags: tags || null,
+      ...meta.value,
       published: !!published,
       publishedAt: published ? new Date() : null,
     },

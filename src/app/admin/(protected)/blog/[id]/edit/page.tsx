@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
+import { EMPTY_POST_META, PostMetaFields, type PostMetaValue } from '@/components/blog/post-meta-fields'
 
 type Post = {
   id: string
@@ -13,6 +14,10 @@ type Post = {
   content: string | null
   coverImage: string | null
   tags: string | null
+  platform: string | null
+  appVersion: string | null
+  osVersion: string | null
+  topic: string | null
   published: boolean
 }
 
@@ -36,6 +41,7 @@ export default function EditPostPage() {
   const [content, setContent] = useState('')
   const [coverImage, setCoverImage] = useState('')
   const [tags, setTags] = useState('')
+  const [meta, setMeta] = useState<PostMetaValue>(EMPTY_POST_META)
   const [published, setPublished] = useState(false)
   const [preview, setPreview] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -55,6 +61,7 @@ export default function EditPostPage() {
       setContent(p.content ?? '')
       setCoverImage(p.coverImage ?? '')
       setTags(p.tags ?? '')
+      setMeta({ platform: p.platform ?? '', appVersion: p.appVersion ?? '', osVersion: p.osVersion ?? '', topic: p.topic ?? '' })
       setPublished(p.published)
       setLoading(false)
     }
@@ -77,7 +84,7 @@ export default function EditPostPage() {
       const res = await fetch(`/api/admin/posts/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, slug, excerpt, content, coverImage, tags, published: publish }),
+        body: JSON.stringify({ title, slug, excerpt, content, coverImage, tags, ...meta, published: publish }),
       })
       if (!res.ok) {
         const d = await res.json()
@@ -290,6 +297,7 @@ export default function EditPostPage() {
                     className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2.5 text-xs text-white/80 placeholder-white/20 outline-none transition focus:border-sky/40"
                   />
                 </div>
+                <PostMetaFields value={meta} onChange={setMeta} />
               </div>
             </div>
 

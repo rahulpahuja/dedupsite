@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import { db } from '@/lib/db'
 import { parseTags, estimateReadTime } from '@/lib/auth'
+import { PostMetaBadges } from '@/components/blog/post-meta-badges'
+import { PLATFORM_LABEL, appVersionLabel, filterQueryFor, isPlatform, osVersionLabel } from '@/lib/blog-meta'
 
 export const dynamicParams = false
 
@@ -43,6 +45,16 @@ export default async function BlogPostPage({ params }: Props) {
 
   const tags = parseTags(post.tags)
   const readTime = estimateReadTime(post.content ?? '')
+
+  // The same action documented for other platforms / versions.
+  const related = post.topic
+    ? await db.post.findMany({
+        where: { published: true, topic: post.topic, NOT: { id: post.id } },
+        orderBy: [{ platform: 'asc' }, { appVersion: 'desc' }],
+        select: { id: true, title: true, slug: true, platform: true, appVersion: true, osVersion: true },
+      })
+    : []
+  const hasMeta = isPlatform(post.platform) || !!post.appVersion || !!post.osVersion
 
   return (
     <main className="relative min-h-screen bg-[#060D1F]">
@@ -104,6 +116,22 @@ export default async function BlogPostPage({ params }: Props) {
             <span>·</span>
             <span>{readTime} min read</span>
           </div>
+
+          {/* Platform / version this post applies to */}
+          {hasMeta && (
+            <div className="mt-6 rounded-xl border border-white/10 bg-white/[0.03] p-4">
+              <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/45">
+                Applies to
+              </div>
+              <PostMetaBadges post={post} size="md" />
+              <Link
+                href={`/blog${filterQueryFor(post)}`}
+                className="mt-3 inline-block text-xs text-sky underline underline-offset-4 hover:text-white"
+              >
+                See all posts for this platform and version →
+              </Link>
+            </div>
+          )}
 
           {/* Markdown content */}
           <div className="prose-blog mt-10">
@@ -176,7 +204,7 @@ export default async function BlogPostPage({ params }: Props) {
                   <img
                     src={src}
                     alt={alt ?? ''}
-                    className="my-6 w-full rounded-xl border border-white/10 object-cover"
+                    className="mx-auto my-6 h-auto max-h-[560px] w-auto max-w-full rounded-xl border border-white/10"
                   />
                 ),
               }}
@@ -184,6 +212,37 @@ export default async function BlogPostPage({ params }: Props) {
               {post.content ?? ''}
             </ReactMarkdown>
           </div>
+
+          {/* Same action on other platforms / versions */}
+          {related.length > 0 && (
+            <section className="mt-16 border-t border-white/[0.07] pt-8" aria-labelledby="related-heading">
+              <h2 id="related-heading" className="font-display text-lg font-semibold text-white">
+                Same action on other platforms and versions
+              </h2>
+              <ul className="mt-4 space-y-3">
+                {related.map((r) => {
+                  const label = [
+                    isPlatform(r.platform) ? PLATFORM_LABEL[r.platform] : null,
+                    appVersionLabel(null, r.appVersion),
+                    osVersionLabel(r.platform, r.osVersion),
+                  ]
+                    .filter(Boolean)
+                    .join(' · ')
+                  return (
+                    <li key={r.id}>
+                      <Link
+                        href={`/blog/${r.slug}`}
+                        className="block rounded-xl border border-white/10 bg-white/[0.02] p-4 transition hover:border-sky/30 hover:bg-white/[0.04]"
+                      >
+                        <span className="block text-xs text-white/45">{label}</span>
+                        <span className="mt-1 block text-sm font-medium text-white">{r.title}</span>
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+            </section>
+          )}
 
           {/* Back link */}
           <div className="mt-16 border-t border-white/[0.07] pt-8">

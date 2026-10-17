@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { isAdminAuthenticated } from '@/lib/auth'
+import { parsePostMeta } from '@/lib/blog-meta'
 
 type Params = Promise<{ id: string }>
 
@@ -24,6 +25,8 @@ export async function PUT(req: Request, { params }: { params: Params }) {
 
   const existing = await db.post.findUnique({ where: { id } })
   if (!existing) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  const meta = parsePostMeta(body)
+  if (!meta.ok) return NextResponse.json({ error: meta.error }, { status: 400 })
 
   const wasPublished = existing.published
   const post = await db.post.update({
@@ -35,6 +38,7 @@ export async function PUT(req: Request, { params }: { params: Params }) {
       content: content || null,
       coverImage: coverImage || null,
       tags: tags || null,
+      ...meta.value,
       published: !!published,
       publishedAt: published && !wasPublished ? new Date() : existing.publishedAt,
     },

@@ -30,6 +30,13 @@ model Post {
   content     String?
   coverImage  String?
   tags        String?
+  // What the post documents: platform ("android" | "ios"), DeDup version ("1.5.3"),
+  // OS version ("15"), and a topic slug shared by the same action across versions.
+  // Null means "not specific" and matches every filter value.
+  platform    String?
+  appVersion  String?
+  osVersion   String?
+  topic       String?
   published   Boolean   @default(false)
   publishedAt DateTime?
   authorName  String    @default("Rahul Pahuja")
