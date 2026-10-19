@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import { BrandLogo } from '@/components/brand/brand-logo'
 import { PRIVACY_POLICY_UPDATED, PrivacyPolicyContent } from '@/components/privacy-policy'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -710,7 +711,9 @@ export default function DedupPage() {
               >
                 Privacy
               </button>
-              <span className="text-white/55">Terms</span>
+              <Link href="/terms" className="text-white/55 transition hover:text-white">
+                Terms
+              </Link>
             </div>
           </div>
         </footer>
