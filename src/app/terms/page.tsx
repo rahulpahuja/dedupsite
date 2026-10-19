@@ -50,8 +50,9 @@ export default function TermsPage() {
                 <p>
                   <strong className="text-white">Legal notice:</strong> Any reverse engineering or
                   re-publishing of DeDup, in whole or in part, without the prior written permission
-                  of the original author will lead to legal action in the courts of India and to
-                  claims for damages worth billions of dollars.
+                  of the original author will lead to legal action in India and in any other country
+                  where the infringement occurs or the infringer is located, and to claims for
+                  damages worth billions of dollars.
                 </p>
               </div>
             </section>
@@ -68,7 +69,18 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h3 className={h3}>2. What You May Not Do</h3>
+              <h3 className={h3}>2. Who These Terms Apply To</h3>
+              <p>
+                These terms apply to everyone who downloads, installs or uses DeDup, or visits
+                dedup.space, anywhere in the world. They apply regardless of where you are located
+                or which app store you used to get the apps. They apply to every version of DeDup,
+                past, present and future, from its first release onward, including old versions
+                and any versions published later.
+              </p>
+            </section>
+
+            <section>
+              <h3 className={h3}>3. What You May Not Do</h3>
               <p className="mb-2">Without the prior written permission of the author, you may not:</p>
               <ul className="list-disc space-y-1.5 pl-5">
                 <li>
@@ -97,18 +109,18 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h3 className={h3}>3. Consequences</h3>
+              <h3 className={h3}>4. Consequences</h3>
               <p>
-                A breach of section 2 will be pursued through civil and, where applicable, criminal
+                A breach of section 3 will be pursued through civil and, where applicable, criminal
                 proceedings in India, under the Copyright Act, 1957, the Information Technology Act,
-                2000 and other applicable law. The author will seek injunctions, the removal of
-                infringing material, and damages and compensation worth billions of dollars, along
-                with legal costs.
+                2000 and other applicable law, and in any other country where the breach occurs.
+                The author will seek injunctions, the removal of infringing material, and damages
+                and compensation worth billions of dollars, along with legal costs.
               </p>
             </section>
 
             <section>
-              <h3 className={h3}>4. Getting Permission</h3>
+              <h3 className={h3}>5. Getting Permission</h3>
               <p>
                 Permission is valid only if it is given in writing by the original author. To ask
                 for it, email{' '}
@@ -121,15 +133,35 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h3 className={h3}>5. Governing Law</h3>
+              <h3 className={h3}>6. Governing Law</h3>
               <p>
                 These terms are governed by the laws of India, and the courts in India have
-                jurisdiction over any dispute arising from them.
+                jurisdiction over any dispute arising from them. The author may also enforce these
+                terms, and seek injunctions and takedowns, in any other jurisdiction, including
+                through app stores and hosting providers.
               </p>
             </section>
 
             <section>
-              <h3 className={h3}>6. Privacy</h3>
+              <h3 className={h3}>7. License</h3>
+              <p>
+                DeDup is proprietary software. Copyright &copy; 2026 Rahul Pahuja. All rights
+                reserved, for every version of DeDup, past, present and future. No licence is granted except the personal, non-transferable right to use
+                the apps described in section 1. The full text is in the{' '}
+                <a
+                  href="https://github.com/rahulpahuja/dedupsite/blob/main/LICENSE"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={link}
+                >
+                  LICENSE file
+                </a>
+                .
+              </p>
+            </section>
+
+            <section>
+              <h3 className={h3}>8. Privacy</h3>
               <p>
                 How the apps handle your data is described in the{' '}
                 <Link href="/privacy" className={link}>
