@@ -696,7 +696,7 @@ export default function DedupPage() {
           <div className="section-shell flex flex-col items-center justify-between gap-4 sm:flex-row">
             <BrandLogo />
             <p className="text-center text-xs text-white/45">
-              © 2006 Mobile1x ·{' '}
+              © 2026 Rahul Pahuja, Mobile1x ·{' '}
               <a
                 href="mailto:therahulpahuja@gmail.com"
                 className="text-white/65 underline-offset-4 hover:text-white hover:underline"

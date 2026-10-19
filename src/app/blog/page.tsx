@@ -115,7 +115,7 @@ export default async function BlogListPage() {
           <Link href="/" className="font-display text-base font-bold text-white">
             DeDup
           </Link>
-          <p className="text-center text-xs text-white/45">© 2006 Mobile1x</p>
+          <p className="text-center text-xs text-white/45">© 2026 Rahul Pahuja, Mobile1x</p>
           <Link href="/" className="text-xs text-white/55 transition hover:text-white">
             ← Back to home
           </Link>
