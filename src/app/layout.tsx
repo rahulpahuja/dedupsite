@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://dedup.space"),
   title: "DeDup: Duplicate Photo & File Cleaner",
   description:
-    "DeDup finds duplicate photos, videos and files on your Android phone or iPhone. It scans on your device and shows you what it would remove before anything is deleted.",
+    "DeDup finds duplicate photos and videos on Android and iPhone, and files on Android. It scans on your device and shows what it would remove before deleting.",
   keywords: [
     "DeDup",
     "duplicate photo cleaner",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "DeDup: Duplicate Photo & File Cleaner",
     description:
-      "DeDup finds duplicate photos, videos and files on your Android phone or iPhone. It scans on your device and shows you what it would remove before anything is deleted.",
+      "DeDup finds duplicate photos and videos on Android and iPhone, and files on Android. It scans on your device and shows what it would remove before deleting.",
     url: "https://dedup.space",
     siteName: "DeDup",
     type: "website",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "DeDup: Duplicate Photo & File Cleaner",
     description:
-      "DeDup finds duplicate photos, videos and files on your Android phone or iPhone. It scans on your device and shows you what it would remove before anything is deleted.",
+      "DeDup finds duplicate photos and videos on Android and iPhone, and files on Android. It scans on your device and shows what it would remove before deleting.",
     creator: "@therahulpahuja",
   },
 };

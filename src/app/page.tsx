@@ -17,7 +17,6 @@ import {
   Receipt,
   Download,
   UserCheck,
-  UserX,
   X,
 } from 'lucide-react'
 
@@ -82,6 +81,8 @@ type Feature = {
   title: string
   desc: string
   tags: string[]
+  /** Which app has the feature. The iPhone app only sees the Photos library and Contacts. */
+  platforms: 'Android' | 'Android & iPhone'
   tint: 'media' | 'smart' | 'contacts' | 'ai'
 }
 
@@ -89,22 +90,25 @@ const MEDIA_FEATURES: Feature[] = [
   {
     icon: <Camera className="h-5 w-5" />,
     title: 'Photo Deduplication',
-    desc: 'Finds exact copies and near-identical shots — burst photos, multiple saves, edited vs. original. Compares pixel-level fingerprints entirely on-device.',
-    tags: ['Exact match', 'Near-duplicate', 'Burst shots'],
+    desc: 'Finds copies and near-identical shots — burst photos, multiple saves, edited vs. original. Compares perceptual fingerprints, computed on your device.',
+    tags: ['Copies', 'Near-duplicate', 'Burst shots'],
+    platforms: 'Android & iPhone',
     tint: 'media',
   },
   {
     icon: <Film className="h-5 w-5" />,
     title: 'Video Deduplication',
-    desc: 'Detects duplicate video files including re-downloads, different quality saves, and trimmed variants. Side-by-side preview before you delete.',
-    tags: ['Re-downloads', 'Multi-quality', 'Preview first'],
+    desc: 'Finds duplicate video files, including re-downloads and re-encoded or different-quality copies. Preview a video before you delete it.',
+    tags: ['Re-downloads', 'Re-encoded copies', 'Preview first'],
+    platforms: 'Android & iPhone',
     tint: 'media',
   },
   {
     icon: <Music className="h-5 w-5" />,
-    title: 'Audio & Docs',
-    desc: 'Scans your music library, voice notes, PDFs, and documents for exact-duplicate files wasting space across folders.',
-    tags: ['Music library', 'PDFs', 'Voice notes'],
+    title: 'Files & Docs',
+    desc: 'Finds duplicate PDFs, documents, archives and other files. Files are grouped by size and name, or by contents on a deep scan.',
+    tags: ['PDFs', 'Documents', 'Archives'],
+    platforms: 'Android',
     tint: 'media',
   },
 ]
@@ -113,22 +117,25 @@ const SMART_FEATURES: Feature[] = [
   {
     icon: <MessagesSquare className="h-5 w-5" />,
     title: 'WhatsApp Cleaner',
-    desc: 'Surfaces forwarded memes, viral screenshots and sticker packs piling up in your WhatsApp Media folder. You review them before anything is removed.',
-    tags: ['Forwarded memes', 'Sticker packs', 'Group media'],
+    desc: 'Scans the images, videos and documents WhatsApp has saved. Finds identical copies, media you sent that you also received, and files over 10 MB. You choose what to delete.',
+    tags: ['Duplicate media', 'Sent copies', 'Large files'],
+    platforms: 'Android',
     tint: 'smart',
   },
   {
     icon: <Receipt className="h-5 w-5" />,
     title: 'Screenshots & Receipts',
-    desc: 'Sorts your 1,000 most recent photos into groups such as screenshots, memes, receipts and documents, and blurry or poorly exposed shots. You pick what to remove.',
+    desc: 'Sorts your 1,000 most recent photos into groups such as screenshots, memes, receipts and documents, and blurry or poorly exposed shots. You pick what to remove. On iPhone, review categories cover screenshots and blurry photos.',
     tags: ['Screenshots', 'Receipts & docs', 'Blurry shots'],
+    platforms: 'Android',
     tint: 'smart',
   },
   {
     icon: <Download className="h-5 w-5" />,
     title: 'Downloads Clean-up',
-    desc: 'Finds re-downloaded files, duplicate APKs, and forgotten install packages sitting in your Downloads folder eating up gigabytes.',
+    desc: 'Finds duplicate APKs, leftover install packages, re-downloaded files, and downloads older than 3 months. You choose what to remove.',
     tags: ['Duplicate APKs', 'Re-downloads', 'Install leftovers'],
+    platforms: 'Android',
     tint: 'smart',
   },
 ]
@@ -137,15 +144,9 @@ const CONTACTS_FEATURES: Feature[] = [
   {
     icon: <UserCheck className="h-5 w-5" />,
     title: 'Duplicate Contact Merger',
-    desc: 'Finds contacts saved multiple times — same person across WhatsApp, Google, and SIM. Merges them cleanly, keeping all numbers and emails, removing none.',
-    tags: ['Cross-account merge', 'WhatsApp contacts', 'Safe — preview first'],
-    tint: 'contacts',
-  },
-  {
-    icon: <UserX className="h-5 w-5" />,
-    title: 'Blank Contacts',
-    desc: 'Surfaces contacts with no name, no number, or only a partial entry — the noise that builds up from years of syncing across phones and SIMs.',
-    tags: ['No-number entries', 'Partial contacts', 'SIM leftovers'],
+    desc: 'Finds contacts saved more than once, matched by the same name or phone number. You preview the merge and can untick anything you don’t want to keep. The numbers and emails of the others are copied onto the contact you keep.',
+    tags: ['Same name or number', 'Preview first', 'Copies numbers & emails'],
+    platforms: 'Android & iPhone',
     tint: 'contacts',
   },
 ]
@@ -198,10 +199,15 @@ function FeatureCard({ f }: { f: Feature }) {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={`card-glow group relative rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6 ${t.glow}`}
     >
-      <div
-        className={`mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${t.icon} border border-white/10`}
-      >
-        {f.icon}
+      <div className="mb-4 flex items-start justify-between gap-3">
+        <div
+          className={`inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${t.icon} border border-white/10`}
+        >
+          {f.icon}
+        </div>
+        <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-medium text-white/60">
+          {f.platforms}
+        </span>
       </div>
       <h3 className="font-display text-lg font-semibold text-white">{f.title}</h3>
       <p className="mt-2 text-sm leading-relaxed text-white/55">{f.desc}</p>
@@ -458,8 +464,9 @@ export default function DedupPage() {
             transition={{ duration: 0.9, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-xl text-base leading-relaxed text-white/65 sm:text-lg"
           >
-            DeDup finds duplicate and near-duplicate photos, videos and files on your phone, and
-            shows you what it would remove before it removes anything.
+            DeDup finds duplicate and near-duplicate photos and videos on your phone, and on Android
+            files and WhatsApp media too. It shows you what it would remove before it removes
+            anything.
           </motion.p>
 
           <motion.div
@@ -518,9 +525,8 @@ export default function DedupPage() {
               APKs. Contacts. Docs.
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-white/55 sm:text-base">
-              Every kind of duplicate on your phone — burst shots, re-downloaded songs, viral
-              WhatsApp videos, leftover APKs, double-saved contacts, cloned PDFs. All found,
-              fingerprinted, and merged on-device.
+              Burst shots, repeat saves, copied videos, WhatsApp media, leftover APKs, double-saved
+              contacts and duplicate PDFs. Scanning and matching happen on your device.
             </p>
           </motion.div>
         </CinematicSection>
@@ -571,7 +577,8 @@ export default function DedupPage() {
                 One app to clear it all.
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-white/55 sm:text-base">
-                DeDup finds duplicates across your media, contacts, chats and downloads.
+                DeDup finds duplicates across your media, contacts, WhatsApp and downloads. Each card
+                shows which app has the feature.
               </p>
             </motion.div>
 
@@ -598,7 +605,7 @@ export default function DedupPage() {
             {/* Contacts cluster */}
             <div className="mb-16">
               <ClusterHeader emoji="👤" label="Contacts" tint="contacts" />
-              <div className="grid gap-5 sm:grid-cols-2">
+              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {CONTACTS_FEATURES.map((f) => (
                   <FeatureCard key={f.title} f={f} />
                 ))}
@@ -626,7 +633,9 @@ export default function DedupPage() {
                     </h3>
                     <p className="mt-3 max-w-md text-sm leading-relaxed text-white/60">
                       Ask for files by size, type, date or name, by voice or by typing. DeDup turns your
-                      request into filters on the media on your phone and lists what matches.
+                      request into filters on the media on your phone and lists what matches. Words
+                      like &ldquo;last month&rdquo; mean the last 30 days. This is on Android; the
+                      iPhone assistant answers questions such as &ldquo;show my largest videos&rdquo;.
                     </p>
                     <div className="mt-6 space-y-2">
                       {AI_EXAMPLES.map((ex, i) => (
@@ -666,7 +675,7 @@ export default function DedupPage() {
               Storage full again?
             </h2>
             <p className="relative mx-auto mt-4 max-w-md text-sm leading-relaxed text-white/60 sm:text-base">
-              DeDup finds duplicate photos, videos and files on your phone and shows you what it would remove first. Free today. No ads.
+              DeDup finds duplicate photos and videos on your phone (and files on Android) and shows you what it would remove first. Free today. No ads.
             </p>
             <div className="relative mt-8 flex flex-wrap justify-center gap-3.5">
               <a
