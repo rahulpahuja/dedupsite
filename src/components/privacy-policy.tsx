@@ -1,7 +1,7 @@
 import { Shield } from 'lucide-react'
 
 /** Shown with the policy and in its heading chip. Update whenever the text changes. */
-export const PRIVACY_POLICY_UPDATED = 'September 22, 2026'
+export const PRIVACY_POLICY_UPDATED = 'October 28, 2026'
 
 const h3 = 'mb-2 font-display text-base font-semibold text-white'
 const term = 'text-white/90'
@@ -69,8 +69,8 @@ export function PrivacyPolicyContent() {
       <section>
         <h3 className={h3}>2. Data Sent Off Your Device</h3>
         <p className="mb-2">
-          We use Google Firebase for the following. None of it is used to track you across other
-          companies&rsquo; apps or websites.
+          The apps use Google Firebase and the services below. We do not use any of it to track you
+          across other companies&rsquo; apps or websites.
         </p>
         <ul className="list-disc space-y-1.5 pl-5">
           <li>
@@ -98,8 +98,21 @@ export function PrivacyPolicyContent() {
             plus occasional announcements and settings such as the minimum supported app version.
           </li>
           <li>
-            <strong className={term}>App integrity</strong> (Android, Google Play Integrity): checks
-            that the app and device are genuine.
+            <strong className={term}>Sign-in error reports</strong> (Android, Firebase Realtime
+            Database): if Google sign-in is cancelled or fails, the app sends the error type and
+            message, your account ID (or &ldquo;anonymous&rdquo;), and your device make, model, OS
+            version, security patch level and app version.
+          </li>
+          <li>
+            <strong className={term}>Assistant model downloads</strong> (Android): if you turn on
+            the on-device assistant or voice input, the app downloads a model file over HTTPS from
+            Hugging Face (huggingface.co) or, for voice models, alphacephei.com. Those hosts see the
+            download request and your IP address. No account, file or scan data is sent.
+          </li>
+          <li>
+            <strong className={term}>Update check</strong> (iPhone): the app asks Apple&rsquo;s App
+            Store lookup service for the latest version, sending the app&rsquo;s bundle ID and your
+            country code.
           </li>
         </ul>
         <p className="mt-2">
