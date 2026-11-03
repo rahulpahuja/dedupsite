@@ -25,7 +25,8 @@ export default function AdminLoginPage() {
         setError('Wrong password. Try again.')
         return
       }
-      router.push('/admin/blog')
+      const next = new URLSearchParams(window.location.search).get('next')
+      router.push(next && next.startsWith('/') && !next.startsWith('//') ? next : '/admin/blog')
       router.refresh()
     } catch {
       setError('Something went wrong.')
