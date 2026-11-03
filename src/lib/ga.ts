@@ -83,6 +83,36 @@ async function accessToken(): Promise<string> {
   return json.access_token
 }
 
+interface GaErrorBody {
+  error?: {
+    message?: string
+    details?: { reason?: string; metadata?: Record<string, string> }[]
+  }
+}
+
+/** Turn a Google API error response into a message that says what to do next. */
+export function describeGaError(httpStatus: number, body: unknown): { message: string; status: number } {
+  const err = (body as GaErrorBody | null)?.error
+  const text = err?.message ?? 'The request failed.'
+  const info = err?.details?.find((d) => d.reason)
+
+  if (info?.reason === 'SERVICE_DISABLED') {
+    const link = info.metadata?.activationUrl
+    const safeLink = link && /^https:\/\/console\.(developers|cloud)\.google\.com\//.test(link) ? ` Enable it here: ${link}` : ''
+    return {
+      message: `The Google Analytics Data API is switched off for this Google Cloud project.${safeLink} Then retry in a few minutes.`,
+      status: 503,
+    }
+  }
+  if (httpStatus === 403) {
+    return {
+      message: `Google Analytics refused access: ${text} Check that the service account is a Viewer on the property.`,
+      status: 403,
+    }
+  }
+  return { message: `Google Analytics: ${text}`, status: 502 }
+}
+
 async function call<T>(version: 'v1beta' | 'v1alpha', method: string, body: unknown): Promise<T> {
   const token = await accessToken()
   const res = await fetch(
@@ -95,14 +125,14 @@ async function call<T>(version: 'v1beta' | 'v1alpha', method: string, body: unkn
     },
   )
   if (!res.ok) {
-    let detail = res.statusText
+    let errBody: unknown = null
     try {
-      detail = ((await res.json()) as { error?: { message?: string } }).error?.message ?? detail
+      errBody = await res.json()
     } catch {
-      /* keep statusText */
+      /* no JSON body */
     }
-    const hint = res.status === 403 ? ' Add the service account as a Viewer on the property.' : ''
-    throw new GaError(`Google Analytics: ${detail}${hint}`, res.status === 403 ? 403 : 502)
+    const { message, status } = describeGaError(res.status, errBody)
+    throw new GaError(message, status)
   }
   return (await res.json()) as T
 }
