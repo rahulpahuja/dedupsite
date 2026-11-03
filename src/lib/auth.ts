@@ -1,11 +1,9 @@
 import { cookies } from 'next/headers'
+import { SESSION_COOKIE, sessionSecret, verifySession } from './admin-session'
 
 export async function isAdminAuthenticated(): Promise<boolean> {
   const cookieStore = await cookies()
-  const token = cookieStore.get('admin_token')?.value
-  const adminPassword = process.env.ADMIN_PASSWORD
-  if (!adminPassword) return false
-  return token === adminPassword
+  return verifySession(cookieStore.get(SESSION_COOKIE)?.value, sessionSecret())
 }
 
 export function generateSlug(title: string): string {
