@@ -3,6 +3,7 @@ import Script from "next/script";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { SiteEvents } from "@/components/analytics/site-events";
 
 // Self-hosted (see ./fonts/README.md) so the build never needs to reach Google Fonts.
 const spaceGrotesk = localFont({
@@ -36,9 +37,8 @@ export const metadata: Metadata = {
     "iOS",
   ],
   authors: [{ name: "Rahul Pahuja" }],
-  alternates: {
-    canonical: "/",
-  },
+  // No site-wide canonical: each page sets its own. A canonical of "/" here was inherited by
+  // every page without one (the blog included), pointing them all at the homepage.
   robots: {
     index: true,
     follow: true,
@@ -48,7 +48,6 @@ export const metadata: Metadata = {
     title: "DeDup: Duplicate Photo & File Cleaner",
     description:
       "DeDup finds duplicate photos and videos on Android and iPhone, and files on Android. It scans on your device and shows what it would remove before deleting.",
-    url: "https://dedup.space",
     siteName: "DeDup",
     type: "website",
     locale: "en_US",
@@ -73,13 +72,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* Preload the most-used 3D textures so they're ready when Three.js initialises */}
-        <link rel="preload" href="/dedup-assets/photo-0.png" as="image" />
-        <link rel="preload" href="/dedup-assets/photo-1.png" as="image" />
-        <link rel="preload" href="/dedup-assets/music-0.png" as="image" />
-        <link rel="preload" href="/dedup-assets/ai-orb.png" as="image" />
-      </head>
       <body
         className={`${spaceGrotesk.variable} ${inter.variable} antialiased bg-night text-white`}
       >
@@ -98,6 +90,7 @@ export default function RootLayout({
           `}
         </Script>
 
+        <SiteEvents />
         {children}
         <Toaster />
       </body>

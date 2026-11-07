@@ -9,7 +9,9 @@ export const dynamic = 'force-static'
 
 export const metadata = {
   title: 'Blog — DeDup',
-  description: 'Tips, updates, and insights from the DeDup team.',
+  description:
+    'Guides to cleaning up phone storage with DeDup: duplicate photos and videos, WhatsApp media, files and privacy, by platform and app version.',
+  alternates: { canonical: 'https://dedup.space/blog' },
 }
 
 function formatDate(date: Date | string | null) {
@@ -64,7 +66,7 @@ export default async function BlogListPage() {
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-[100] px-6 py-4">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <Link href="/" aria-label="DeDup home">
+          <Link href="/" prefetch={false} aria-label="DeDup home">
             <BrandLogo />
           </Link>
           <div className="flex items-center gap-4 text-sm">
@@ -76,6 +78,7 @@ export default async function BlogListPage() {
             </Link>
             <Link
               href="/"
+              prefetch={false}
               className="text-white/60 transition hover:text-white"
             >
               Home
@@ -112,11 +115,11 @@ export default async function BlogListPage() {
       {/* Footer */}
       <footer className="relative border-t border-white/[0.06] bg-[#060D1F] px-6 py-10">
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 sm:flex-row">
-          <Link href="/" className="font-display text-base font-bold text-white">
+          <Link href="/" prefetch={false} className="font-display text-base font-bold text-white">
             DeDup
           </Link>
           <p className="text-center text-xs text-white/45">© 2026 Rahul Pahuja, Mobile1x</p>
-          <Link href="/" className="text-xs text-white/55 transition hover:text-white">
+          <Link href="/" prefetch={false} className="text-xs text-white/55 transition hover:text-white">
             ← Back to home
           </Link>
         </div>

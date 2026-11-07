@@ -6,6 +6,10 @@ import { db } from '@/lib/db'
 import { parseTags, estimateReadTime } from '@/lib/auth'
 import { PostMetaBadges } from '@/components/blog/post-meta-badges'
 import { PLATFORM_LABEL, appVersionLabel, filterQueryFor, isPlatform, osVersionLabel } from '@/lib/blog-meta'
+import { JsonLd } from '@/components/seo/json-ld'
+import { PlayButton } from '@/components/seo/site-chrome'
+import { DEFAULT_SHARE_IMAGE, FEATURE_PAGES, absoluteUrl, articleJsonLd, breadcrumbJsonLd } from '@/lib/site'
+import type { Metadata } from 'next'
 
 export const dynamicParams = false
 
@@ -19,13 +23,35 @@ export async function generateStaticParams() {
 
 type Props = { params: Promise<{ slug: string }> }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const post = await db.post.findFirst({ where: { slug, published: true } })
   if (!post) return {}
+  const url = absoluteUrl(`/blog/${post.slug}`)
+  const title = `${post.title} — DeDup Blog`
+  const description = post.excerpt ?? undefined
   return {
-    title: `${post.title} — DeDup Blog`,
-    description: post.excerpt ?? undefined,
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: 'DeDup',
+      type: 'article',
+      locale: 'en_US',
+      publishedTime: post.publishedAt?.toISOString(),
+      modifiedTime: post.updatedAt.toISOString(),
+      authors: [post.authorName],
+      images: [post.coverImage ? absoluteUrl(post.coverImage) : DEFAULT_SHARE_IMAGE],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [post.coverImage ? absoluteUrl(post.coverImage) : DEFAULT_SHARE_IMAGE.url],
+    },
   }
 }
 
@@ -58,12 +84,30 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <main className="relative min-h-screen bg-[#060D1F]">
+      <JsonLd
+        data={[
+          articleJsonLd({
+            title: post.title,
+            description: post.excerpt,
+            path: `/blog/${post.slug}`,
+            image: post.coverImage,
+            authorName: post.authorName,
+            publishedAt: post.publishedAt,
+            updatedAt: post.updatedAt,
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Blog', path: '/blog' },
+            { name: post.title, path: `/blog/${post.slug}` },
+          ]),
+        ]}
+      />
       <div className="pointer-events-none fixed inset-x-0 top-0 z-[2] h-32 bg-gradient-to-b from-[#060D1F] to-transparent" />
 
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-[100] px-6 py-4">
         <div className="mx-auto flex max-w-3xl items-center justify-between">
-          <Link href="/" aria-label="DeDup home">
+          <Link href="/" prefetch={false} aria-label="DeDup home">
             <BrandLogo />
           </Link>
           <Link
@@ -185,16 +229,22 @@ export default async function BlogPostPage({ params }: Props) {
                     </code>
                   )
                 },
-                a: ({ href, children }) => (
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sky underline underline-offset-4 transition hover:text-white"
-                  >
-                    {children}
-                  </a>
-                ),
+                a: ({ href, children }) =>
+                  // Links to other pages on this site open in the same tab; external ones in a new tab.
+                  href?.startsWith('/') ? (
+                    <Link href={href} className="text-sky underline underline-offset-4 transition hover:text-white">
+                      {children}
+                    </Link>
+                  ) : (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sky underline underline-offset-4 transition hover:text-white"
+                    >
+                      {children}
+                    </a>
+                  ),
                 strong: ({ children }) => (
                   <strong className="font-semibold text-white">{children}</strong>
                 ),
@@ -212,6 +262,27 @@ export default async function BlogPostPage({ params }: Props) {
               {post.content ?? ''}
             </ReactMarkdown>
           </div>
+
+          {/* Install CTA and feature pages */}
+          <aside className="mt-14 rounded-2xl border border-white/10 bg-gradient-to-br from-ocean/20 via-sky/[0.05] to-transparent p-6 sm:p-8">
+            <h2 className="font-display text-xl font-bold text-white">Try DeDup on your phone</h2>
+            <p className="mt-2 text-sm leading-relaxed text-white/65">
+              DeDup is a free Android storage cleaner. Scans run on your phone, and you review everything
+              before it is removed.
+            </p>
+            <div className="mt-5">
+              <PlayButton placement={`blog_${post.slug}`} />
+            </div>
+            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+              {FEATURE_PAGES.map((p) => (
+                <li key={p.path}>
+                  <Link href={p.path} className="text-sky underline-offset-4 hover:text-white hover:underline">
+                    {p.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </aside>
 
           {/* Same action on other platforms / versions */}
           {related.length > 0 && (
@@ -259,7 +330,7 @@ export default async function BlogPostPage({ params }: Props) {
       {/* Footer */}
       <footer className="relative border-t border-white/[0.06] bg-[#060D1F] px-6 py-10">
         <div className="mx-auto flex max-w-3xl flex-col items-center justify-between gap-4 sm:flex-row">
-          <Link href="/" className="font-display text-base font-bold text-white">
+          <Link href="/" prefetch={false} className="font-display text-base font-bold text-white">
             DeDup
           </Link>
           <p className="text-center text-xs text-white/45">© 2026 Rahul Pahuja, Mobile1x</p>
