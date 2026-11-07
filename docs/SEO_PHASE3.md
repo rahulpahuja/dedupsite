@@ -1,6 +1,6 @@
 # DeDup website: Phase 3 organic acquisition (SEO)
 
-Branch `feat/seo-phase3`. Last updated 2026-11-07.
+Merged to `main` and live. Last updated 2026-11-07. Next steps: `docs/HANDOFF.md`.
 
 ## What was added
 
@@ -70,7 +70,7 @@ Sent through the existing gtag.js tag (G-E6B5M8JKHP). No new SDK.
 
 All Google Play links use `utm_source=website&utm_medium=organic&utm_campaign=dedup_seo&utm_content=<placement>`.
 
-**To do in GA4** (Admin → Custom definitions): register event-scoped custom dimensions for `placement`, `feature`, `landing_page`, `to_path`, `question`, `article_slug` if you want them in reports. Mark `google_play_cta_click` as a key event.
+GA4 custom dimensions for `placement`, `feature`, `landing_page`, `to_path`, `question` and `article_slug` were created on 2026-11-07. Still to do: mark `google_play_cta_click` as a key event once it appears in Recent events (see `docs/HANDOFF.md`).
 
 ## Articles
 
@@ -98,7 +98,7 @@ The code has no verification meta tag, so the property is either verified by DNS
 5. After a few days, check Pages (indexing report) for "Duplicate, Google chose different canonical" on blog posts, which the old site-wide canonical could have caused; they should clear after recrawl.
 6. Optional: link Search Console to the GA4 web property (GA4 Admin → Product links → Search Console).
 
-Nothing has been submitted, and no page has been verified as indexed.
+Done on 2026-11-07: sitemap submitted (57 URLs discovered) and indexing requested for the four feature pages. Indexing is not yet confirmed. See `docs/HANDOFF.md`.
 
 ## Deployment
 
