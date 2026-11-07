@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { db } from '@/lib/db'
+import { FEATURE_PAGES } from '@/lib/site'
 
 const BASE_URL = 'https://dedup.space'
 
@@ -24,6 +25,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 1.0,
     },
+    ...FEATURE_PAGES.map((p) => ({
+      url: `${BASE_URL}${p.path}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.9,
+    })),
     {
       url: `${BASE_URL}/privacy`,
       lastModified: new Date(),

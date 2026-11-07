@@ -18,7 +18,12 @@ import {
   Download,
   UserCheck,
   X,
+  PieChart,
+  Search,
+  Lock,
 } from 'lucide-react'
+import { AppleIcon, GooglePlayIcon } from '@/components/brand/store-icons'
+import { APP_STORE_URL, FEATURE_PAGES, playStoreUrl } from '@/lib/site'
 
 // 3D scene is loaded only on client (Three.js needs window)
 const DedupScene = dynamic(() => import('@/components/three/DedupScene'), {
@@ -27,50 +32,6 @@ const DedupScene = dynamic(() => import('@/components/three/DedupScene'), {
 const GeminiAurora = dynamic(() => import('@/components/dedup/GeminiAurora'), {
   ssr: false,
 })
-
-/* ───────────────────────────────────────────────────────────────
-   ICONS
-   ─────────────────────────────────────────────────────────────── */
-
-const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.rp.dedup'
-const APP_STORE_URL = 'https://apps.apple.com/us/app/dedup-ai-photo-cleaner/id6814824281'
-
-function AppleIcon({ className = '' }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701" />
-    </svg>
-  )
-}
-
-function GooglePlayIcon({ className = '' }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path d="M3.18 23.76c.37.2.8.22 1.19.06l12.19-7.04-2.68-2.68L3.18 23.76z" />
-      <path
-        d="M22.14 10.4c-.54-.31-1.24-.31-1.78 0l-2.64 1.52-2.95-2.95 2.95-2.95 2.64 1.52c.54.31 1.24.31 1.78 0 .54-.31.86-.88.86-1.5s-.32-1.19-.86-1.5L4.37.24C3.98.08 3.55.1 3.18.3L13.88 11 3.18 21.7c.37.2.8.22 1.19.06L20.36 12.9l1.78-1.02c.54-.31.86-.88.86-1.5s-.32-1.18-.86-1.5v.52z"
-        opacity=".6"
-      />
-      <path d="M3.18.3C2.64.61 2.32 1.18 2.32 1.8v20.4c0 .62.32 1.19.86 1.5l10.7-10.7L3.18.3z" />
-    </svg>
-  )
-}
 
 /* ───────────────────────────────────────────────────────────────
    DATA — feature cards (shown AFTER the cinematic reveal)
@@ -84,32 +45,37 @@ type Feature = {
   /** Which app has the feature. The iPhone app only sees the Photos library and Contacts. */
   platforms: 'Android' | 'Android & iPhone'
   tint: 'media' | 'smart' | 'contacts' | 'ai'
+  /** Page with more detail, when there is one. */
+  href?: string
 }
 
 const MEDIA_FEATURES: Feature[] = [
   {
     icon: <Camera className="h-5 w-5" />,
-    title: 'Photo Deduplication',
+    title: 'Duplicate Photo Cleaner',
     desc: 'Finds copies and near-identical shots — burst photos, multiple saves, edited vs. original. Compares perceptual fingerprints, computed on your device.',
     tags: ['Copies', 'Near-duplicate', 'Burst shots'],
     platforms: 'Android & iPhone',
     tint: 'media',
+    href: '/duplicate-photo-cleaner',
   },
   {
     icon: <Film className="h-5 w-5" />,
-    title: 'Video Deduplication',
+    title: 'Duplicate Video Cleaner',
     desc: 'Finds duplicate video files, including re-downloads and re-encoded or different-quality copies. Preview a video before you delete it.',
     tags: ['Re-downloads', 'Re-encoded copies', 'Preview first'],
     platforms: 'Android & iPhone',
     tint: 'media',
+    href: '/duplicate-video-cleaner',
   },
   {
     icon: <Music className="h-5 w-5" />,
-    title: 'Files & Docs',
+    title: 'File Cleaner',
     desc: 'Finds duplicate PDFs, documents, archives and other files. Files are grouped by size and name, or by contents on a deep scan.',
     tags: ['PDFs', 'Documents', 'Archives'],
     platforms: 'Android',
     tint: 'media',
+    href: '/ai-storage-cleaner',
   },
 ]
 
@@ -121,6 +87,7 @@ const SMART_FEATURES: Feature[] = [
     tags: ['Duplicate media', 'Sent copies', 'Large files'],
     platforms: 'Android',
     tint: 'smart',
+    href: '/whatsapp-cleaner',
   },
   {
     icon: <Receipt className="h-5 w-5" />,
@@ -137,6 +104,36 @@ const SMART_FEATURES: Feature[] = [
     tags: ['Duplicate APKs', 'Re-downloads', 'Install leftovers'],
     platforms: 'Android',
     tint: 'smart',
+  },
+]
+
+const STORAGE_FEATURES: Feature[] = [
+  {
+    icon: <PieChart className="h-5 w-5" />,
+    title: 'Smart Storage Analyzer',
+    desc: 'Storage Insights shows used and free space and a storage health score out of 100. The storage map draws your folders as blocks sized by how much they hold, so you can see where space went.',
+    tags: ['Health score', 'Storage map', 'Large files'],
+    platforms: 'Android',
+    tint: 'smart',
+    href: '/ai-storage-cleaner',
+  },
+  {
+    icon: <Search className="h-5 w-5" />,
+    title: 'Smart Photo Search',
+    desc: 'Search your photos in plain words by the album, app or date they came from, such as “WhatsApp March 2024”. The matching runs on your phone. It does not look at what is in the picture.',
+    tags: ['By album', 'By app', 'By date'],
+    platforms: 'Android',
+    tint: 'smart',
+    href: '/blog/android-1-5-3-search-photos-by-album-app-or-date',
+  },
+  {
+    icon: <Lock className="h-5 w-5" />,
+    title: 'Privacy',
+    desc: 'Scanning, matching, photo labelling and contact matching run on your phone. Your photos, files and contacts are not uploaded. The app uses Firebase for sign-in, crash reports and usage analytics.',
+    tags: ['On-device scans', 'No ads', 'Delete your account in-app'],
+    platforms: 'Android & iPhone',
+    tint: 'contacts',
+    href: '/privacy',
   },
 ]
 
@@ -221,6 +218,15 @@ function FeatureCard({ f }: { f: Feature }) {
           </span>
         ))}
       </div>
+      {f.href && (
+        <Link
+          href={f.href}
+          data-cta="home_feature_card"
+          className="mt-5 inline-block text-sm font-medium text-sky underline-offset-4 hover:text-white hover:underline"
+        >
+          Learn more<span className="sr-only"> about {f.title}</span> →
+        </Link>
+      )}
     </motion.div>
   )
 }
@@ -447,27 +453,18 @@ export default function DedupPage() {
             <span className="h-px w-6 bg-sky/60" />
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="font-display text-5xl font-bold leading-[1.04] tracking-tight sm:text-6xl md:text-7xl lg:text-[86px]"
-          >
-            Clean your phone.
+          {/* Not animated in: the heading is the largest above-the-fold element, so it is
+              painted straight from the server HTML instead of waiting for hydration. */}
+          <h1 className="font-display text-5xl font-bold leading-[1.04] tracking-tight sm:text-6xl md:text-7xl lg:text-[86px]">
+            Clean Your Phone.
             <br />
-            <span className="text-gradient">Keep what matters.</span>
-          </motion.h1>
+            <span className="text-gradient">Reclaim Your Storage.</span>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-xl text-base leading-relaxed text-white/65 sm:text-lg"
-          >
-            DeDup finds duplicate and near-duplicate photos and videos on your phone, and on Android
-            files and WhatsApp media too. It shows you what it would remove before it removes
-            anything.
-          </motion.p>
+          <p className="max-w-xl text-base leading-relaxed text-white/65 sm:text-lg">
+            Find duplicate photos, similar images, repeated videos and unnecessary files with DeDup —
+            your AI-powered storage cleaner.
+          </p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -476,24 +473,32 @@ export default function DedupPage() {
             className="flex flex-wrap items-center justify-center gap-3.5"
           >
             <a
-              href={PLAY_STORE_URL}
+              href={playStoreUrl('home_hero')}
               target="_blank"
               rel="noopener noreferrer"
+              data-cta="home_hero"
               className="btn-primary-3d"
             >
               <GooglePlayIcon className="h-[18px] w-[18px]" />
-              Get it on Google Play
+              Download on Google Play
             </a>
             <a
-              href={APP_STORE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary-3d"
+              href="#features"
+              className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/10"
             >
-              <AppleIcon className="h-[18px] w-[18px]" />
-              Download on the App Store
+              Explore Features
             </a>
           </motion.div>
+
+          <a
+            href={APP_STORE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs text-white/55 underline-offset-4 hover:text-white hover:underline"
+          >
+            <AppleIcon className="h-3.5 w-3.5" />
+            Also on iPhone: download on the App Store
+          </a>
 
           <motion.div
             initial={{ opacity: 0 }}
@@ -559,7 +564,7 @@ export default function DedupPage() {
         {/* ── FEATURE GRID SECTION (after cinematic) ───── */}
         {/* The 3D canvas fades out via the bottom gradient as this content
             begins; section has a more opaque background to remain legible. */}
-        <section className="relative bg-[#060D1F]/85 px-6 pb-24 pt-32 backdrop-blur-md">
+        <section id="features" className="relative scroll-mt-16 bg-[#060D1F]/85 px-6 pb-24 pt-32 backdrop-blur-md">
           <div className="section-shell">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -577,8 +582,9 @@ export default function DedupPage() {
                 One app to clear it all.
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-white/55 sm:text-base">
-                DeDup finds duplicates across your media, contacts, WhatsApp and downloads. Each card
-                shows which app has the feature.
+                DeDup finds duplicates and unnecessary files across your media, WhatsApp, downloads
+                and contacts, and shows where your storage went. Each card shows which app has the
+                feature.
               </p>
             </motion.div>
 
@@ -597,6 +603,16 @@ export default function DedupPage() {
               <ClusterHeader emoji="🧹" label="Smart Clean" tint="smart" />
               <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {SMART_FEATURES.map((f) => (
+                  <FeatureCard key={f.title} f={f} />
+                ))}
+              </div>
+            </div>
+
+            {/* Storage, search and privacy cluster */}
+            <div className="mb-16">
+              <ClusterHeader emoji="📊" label="Storage & Privacy" tint="smart" />
+              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {STORAGE_FEATURES.map((f) => (
                   <FeatureCard key={f.title} f={f} />
                 ))}
               </div>
@@ -679,13 +695,14 @@ export default function DedupPage() {
             </p>
             <div className="relative mt-8 flex flex-wrap justify-center gap-3.5">
               <a
-                href={PLAY_STORE_URL}
+                href={playStoreUrl('home_footer_cta')}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-cta="home_footer_cta"
                 className="btn-primary-3d"
               >
                 <GooglePlayIcon className="h-[18px] w-[18px]" />
-                Get DeDup on Google Play
+                Download on Google Play
               </a>
               <a
                 href={APP_STORE_URL}
@@ -702,17 +719,24 @@ export default function DedupPage() {
 
         {/* ── FOOTER ──────────────────────────────────── */}
         <footer className="relative border-t border-white/[0.06] bg-[#060D1F] px-6 py-10">
-          <div className="section-shell flex flex-col items-center justify-between gap-4 sm:flex-row">
+          <div className="section-shell flex flex-col flex-wrap items-center justify-between gap-4 sm:flex-row">
             <BrandLogo />
             <p className="text-center text-xs text-white/45">
               © 2026 Rahul Pahuja, Mobile1x ·{' '}
               <a
                 href="mailto:therahulpahuja@gmail.com"
-                className="text-white/65 underline-offset-4 hover:text-white hover:underline"
+                className="text-white/65 underline underline-offset-4 hover:text-white"
               >
                 therahulpahuja@gmail.com
               </a>
             </p>
+            <nav aria-label="Features" className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs">
+              {FEATURE_PAGES.map((p) => (
+                <Link key={p.path} href={p.path} className="text-white/55 transition hover:text-white">
+                  {p.label}
+                </Link>
+              ))}
+            </nav>
             <div className="flex items-center gap-4 text-xs">
               <button
                 onClick={() => setPrivacyOpen(true)}
