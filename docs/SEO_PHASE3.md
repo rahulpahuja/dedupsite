@@ -72,9 +72,9 @@ All Google Play links use `utm_source=website&utm_medium=organic&utm_campaign=de
 
 **To do in GA4** (Admin → Custom definitions): register event-scoped custom dimensions for `placement`, `feature`, `landing_page`, `to_path`, `question`, `article_slug` if you want them in reports. Mark `google_play_cta_click` as a key event.
 
-## Draft articles (not published)
+## Articles
 
-Eight drafts are in the blog database with `published = false`. They are not built into the site and return 404 until published.
+Eight articles, published 2026-11-07 (they started as drafts):
 
 1. How to Find and Remove Duplicate Photos on Android — `find-and-remove-duplicate-photos-android`
 2. How to Find Similar Photos on Your Android Phone — `find-similar-photos-android`
@@ -85,7 +85,7 @@ Eight drafts are in the blog database with `published = false`. They are not bui
 7. How to Organize Android Storage Without Losing Important Files — `organize-android-storage-safely`
 8. How On-Device Photo Analysis Protects Your Privacy — `on-device-photo-analysis-privacy`
 
-Source of truth: `content/articles/*.md`. To review: run the site locally, open `/admin/blog`, edit, then tick Published (sets `publishedAt`), and commit `db/custom.db`. After editing a Markdown file, `bun scripts/seed-seo-articles.ts --update` refreshes drafts that are still unpublished. It never changes a published post.
+Source: `content/articles/*.md`. Now that they are published, edit them in `/admin/blog` and commit `db/custom.db`; `bun scripts/seed-seo-articles.ts` never changes a published post. New Markdown files added later are loaded as drafts.
 
 ## Google Search Console
 
@@ -93,7 +93,7 @@ The code has no verification meta tag, so the property is either verified by DNS
 
 1. Open https://search.google.com/search-console and sign in with the Google account that should own the property.
 2. If `dedup.space` is not listed: Add property → **Domain** → `dedup.space`, then add the TXT record it shows to the domain's DNS and press Verify.
-3. Sitemaps (left menu) → enter `sitemap.xml` → Submit. Status should become "Success" with about 49 discovered URLs (45 + 4 new pages; the count grows as drafts are published).
+3. Sitemaps (left menu) → enter `sitemap.xml` → Submit. Status should become "Success" with about 57 discovered URLs.
 4. URL Inspection → paste each new URL (`https://dedup.space/ai-storage-cleaner`, `/duplicate-photo-cleaner`, `/duplicate-video-cleaner`, `/whatsapp-cleaner`) → **Request indexing**.
 5. After a few days, check Pages (indexing report) for "Duplicate, Google chose different canonical" on blog posts, which the old site-wide canonical could have caused; they should clear after recrawl.
 6. Optional: link Search Console to the GA4 web property (GA4 Admin → Product links → Search Console).
@@ -112,7 +112,12 @@ Netlify deploys `main` automatically.
 
 - **App name mismatch.** The live Play title is "DeDup: Duplicate Photo Cleaner"; the site positions DeDup as "AI Storage Cleaner". The site does not quote the store title, but decide which name both should use.
 - **Missing screenshots.** No real Android captures exist for duplicate-photo results, duplicate-video results or the WhatsApp cleaner. Pages use the dashboard, optimize, file-cleanup, insights and similarity-setting screens, and the iPhone video scanner (labelled as iPhone). The iPhone photo-results capture was not used because it shows a real receipt with personal details. Capture new Android screens with sample media and swap them into `src/content/landing-pages.ts`.
-- **Share image** (`src/app/opengraph-image.png`) still carries the old tagline "Keep what matters"; update the artwork if the new headline sticks.
-- **Homepage performance.** Lighthouse mobile: 79–86 on warm runs, 40 on the first (cold) run; the Three.js scene chunk (~895 KB uncompressed) dominates main-thread time. Options: start the scene only after idle, or not on small screens. This is a design decision, so it was left as is.
+- **Homepage performance.** Lighthouse mobile: 79–86 on warm runs, 40 on the first (cold) run; the Three.js scene chunk (~895 KB uncompressed) dominates main-thread time. Starting the scene on browser idle was tried and scored worse (64–74), so it was reverted. Remaining option: skip the 3D scene on small screens, which changes the mobile design.
 - **Version labels.** Existing blog guides say 1.5.3; behaviour that changed in 1.6.x (Trash staging, WhatsApp sent-copy logic, WhatsApp delete confirmation) makes some of those posts out of date.
-- Lint: 3 errors and 4 warnings exist on `main` in files not touched here (`use-mobile.ts`, `carousel.tsx`, admin blog page, unused disable directives). Type-check: 3 errors in `examples/` and `scripts/gen-assets.ts` (missing optional modules), also pre-existing. `next.config.ts` still has `ignoreBuildErrors: true`.
+
+## Done in the follow-up (2026-11-07)
+
+- Share image (`src/app/opengraph-image.png`, `twitter-image.png`) updated to "Clean Your Phone. Reclaim Your Storage." using the original artwork.
+- The eight articles were published.
+- Lint is clean: `useIsMobile` and the carousel read state with `useSyncExternalStore` (the carousel also now unsubscribes from `reInit`), the admin blog list loads posts without a synchronous effect call, and unused disable comments were removed.
+- Type-check is clean: `examples/` and the unused `scripts/gen-assets.ts` (needs the uninstalled `canvas` module) are excluded in `tsconfig.json`, matching the ESLint ignores, and `ignoreBuildErrors` was removed, so the build now fails on type errors.
