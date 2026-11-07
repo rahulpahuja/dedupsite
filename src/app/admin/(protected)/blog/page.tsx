@@ -27,15 +27,18 @@ export default function AdminBlogPage() {
   const [loading, setLoading] = useState(true)
   const [deleting, setDeleting] = useState<string | null>(null)
 
-  async function load() {
-    const res = await fetch('/api/admin/posts')
-    if (res.status === 401) { router.push('/admin/login'); return }
-    const data = await res.json()
-    setPosts(data.posts ?? [])
-    setLoading(false)
-  }
-
-  useEffect(() => { load() }, [])
+  useEffect(() => {
+    let cancelled = false
+    fetch('/api/admin/posts')
+      .then(async (res) => {
+        if (res.status === 401) { router.push('/admin/login'); return }
+        const data = await res.json()
+        if (cancelled) return
+        setPosts(data.posts ?? [])
+        setLoading(false)
+      })
+    return () => { cancelled = true }
+  }, [router])
 
   async function handleDelete(id: string, title: string) {
     if (!confirm(`Delete "${title}"? This cannot be undone.`)) return

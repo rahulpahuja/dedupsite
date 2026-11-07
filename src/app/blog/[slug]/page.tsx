@@ -124,7 +124,7 @@ export default async function BlogPostPage({ params }: Props) {
           {/* Cover image */}
           {post.coverImage && (
             <div className="mb-10 overflow-hidden rounded-2xl border border-white/10">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
+              { }
               <img
                 src={post.coverImage}
                 alt={post.title}
@@ -250,7 +250,7 @@ export default async function BlogPostPage({ params }: Props) {
                 ),
                 hr: () => <hr className="my-8 border-white/10" />,
                 img: ({ src, alt }) => (
-                  // eslint-disable-next-line @next/next/no-img-element
+                   
                   <img
                     src={src}
                     alt={alt ?? ''}

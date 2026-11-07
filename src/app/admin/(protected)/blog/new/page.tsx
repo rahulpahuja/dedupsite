@@ -199,7 +199,7 @@ export default function NewPostPage() {
                     className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2.5 text-xs text-white/80 placeholder-white/20 outline-none transition focus:border-sky/40"
                   />
                   {coverImage && (
-                    // eslint-disable-next-line @next/next/no-img-element
+                     
                     <img
                       src={coverImage}
                       alt="cover preview"
